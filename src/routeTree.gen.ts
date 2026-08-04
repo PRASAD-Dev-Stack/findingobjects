@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LevelsRouteImport } from './routes/levels'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as PlayLevelIdRouteImport } from './routes/play.$levelId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +24,49 @@ const LevelsRoute = LevelsRouteImport.update({
   path: '/levels',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlayLevelIdRoute = PlayLevelIdRouteImport.update({
+  id: '/play/$levelId',
+  path: '/play/$levelId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/levels': typeof LevelsRoute
+  '/profile': typeof ProfileRoute
+  '/play/$levelId': typeof PlayLevelIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/levels': typeof LevelsRoute
+  '/profile': typeof ProfileRoute
+  '/play/$levelId': typeof PlayLevelIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/levels': typeof LevelsRoute
+  '/profile': typeof ProfileRoute
+  '/play/$levelId': typeof PlayLevelIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/levels'
+  fullPaths: '/' | '/levels' | '/profile' | '/play/$levelId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/levels'
-  id: '__root__' | '/' | '/levels'
+  to: '/' | '/levels' | '/profile' | '/play/$levelId'
+  id: '__root__' | '/' | '/levels' | '/profile' | '/play/$levelId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LevelsRoute: typeof LevelsRoute
+  ProfileRoute: typeof ProfileRoute
+  PlayLevelIdRoute: typeof PlayLevelIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +85,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LevelsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/play/$levelId': {
+      id: '/play/$levelId'
+      path: '/play/$levelId'
+      fullPath: '/play/$levelId'
+      preLoaderRoute: typeof PlayLevelIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LevelsRoute: LevelsRoute,
+  ProfileRoute: ProfileRoute,
+  PlayLevelIdRoute: PlayLevelIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
