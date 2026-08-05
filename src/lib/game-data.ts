@@ -54,70 +54,70 @@ export const CHAPTER_THEMES: {
     name: "Cozy House",
     mechanic: "Tap to find",
     emoji: "🏠",
-    props: ["🧸", "🍪", "🕯️", "🔑", "🧦", "☕", "📚", "🪥", "🧶", "🪑", "🍎", "🕰️"],
+    props: ["🧸", "🍪", "🕯️", "🔑", "🧦", "☕", "📚", "🪥", "🧶", "🪑", "🍎", "🕰️", "🪆", "🧴", "🪒", "🍯", "🧁", "🥛", "🪟", "🛋️", "🖼️", "🪞", "🧹", "🧺", "🪣", "🧷", "📻", "💡", "🔌", "🪜", "🧊", "🍞", "🥐", "🧀", "🍵", "🥄", "🍴", "🔨", "📎", "✂️", "🖊️", "📒", "🎧", "🪀", "🎲", "🧩", "🪁", "🩴"],
   },
   {
     key: "city",
     name: "City Street",
     mechanic: "Tiny hidden objects",
     emoji: "🌆",
-    props: ["🚕", "🚦", "🥨", "📮", "🛴", "🎈", "🗞️", "🕶️", "☂️", "🍔", "🚲", "🪧"],
+    props: ["🚕", "🚦", "🥨", "📮", "🛴", "🎈", "🗞️", "🕶️", "☂️", "🍔", "🚲", "🪧", "🚌", "🛵", "🏧", "🚏", "🗑️", "🚧", "🅿️", "🏪", "🍟", "🌭", "🥤", "🍕", "💼", "👜", "🧢", "👟", "📱", "💳", "🎫", "🪙", "🚓", "🚑", "🚒", "🛺", "🛹", "🧃", "🥪", "🌮", "📸", "🎸", "🪗", "🧯", "🚪", "🪟", "🕰️", "🐕"],
   },
   {
     key: "forest",
     name: "Enchanted Forest",
     mechanic: "Camouflaged objects",
     emoji: "🌲",
-    props: ["🍄", "🦋", "🐿️", "🪶", "🌰", "🦉", "🌻", "🐌", "🍁", "🪵", "🐝", "🪺"],
+    props: ["🍄", "🦋", "🐿️", "🪶", "🌰", "🦉", "🌻", "🐌", "🍁", "🪵", "🐝", "🪺", "🦌", "🦊", "🐇", "🐸", "🕷️", "🐜", "🪲", "🐛", "🌿", "🍀", "🌷", "🌼", "🌾", "🪴", "🌳", "🪨", "💧", "🕊️", "🦔", "🦇", "🐻", "🐺", "🥚", "🪹", "🍂", "🌱", "🐞", "🦎", "🕸️", "🌸", "🧺", "🪃", "🔥", "⛺", "🎣", "🪤"],
   },
   {
     key: "reef",
     name: "Underwater Reef",
     mechanic: "Drifting objects",
     emoji: "🐠",
-    props: ["🐠", "🐚", "🦀", "🪸", "🐙", "⚓", "🐟", "🧜", "🫧", "🦈", "🗝️", "🐢"],
+    props: ["🐠", "🐚", "🦀", "🪸", "🐙", "⚓", "🐟", "🧜", "🫧", "🦈", "🗝️", "🐢", "🦞", "🦐", "🦑", "🐡", "🐋", "🐳", "🐬", "🌊", "🧭", "🪝", "⛵", "🛶", "🥽", "🩱", "🪼", "🐊", "🦭", "🏝️", "🗺️", "💰", "💎", "🔱", "🪨", "🌴", "🧊", "🎏", "🪣", "🩸", "🥥", "🦆", "🪺", "📦", "🔦", "🧲", "⛓️", "🪀"],
   },
   {
     key: "mansion",
     name: "Haunted Mansion",
     mechanic: "Decoy objects",
     emoji: "🏚️",
-    props: ["🕯️", "🕸️", "🦇", "🗝️", "🪞", "💀", "🧪", "🕰️", "🪦", "🐈‍⬛", "📜", "🎩"],
+    props: ["🕯️", "🕸️", "🦇", "🗝️", "🪞", "💀", "🧪", "🕰️", "🪦", "🐈‍⬛", "📜", "🎩", "👻", "🧛", "🕷️", "🪤", "🩸", "⚰️", "🔮", "🪄", "📕", "🖼️", "🪑", "🚪", "🪟", "🧹", "🦴", "🐀", "🦉", "🧿", "⛓️", "🗡️", "🏺", "🪔", "🍷", "🥀", "🎻", "🎹", "📿", "🧸", "🪆", "🔔", "🪶", "🧴", "🧨", "💍", "🪙"],
   },
   {
     key: "space",
     name: "Space Station",
     mechanic: "Parallax scene",
     emoji: "🛸",
-    props: ["🛰️", "👾", "🚀", "🪐", "🔭", "🧑‍🚀", "☄️", "🛠️", "🔋", "🪫", "🧲", "💫"],
+    props: ["🛰️", "👾", "🚀", "🪐", "🔭", "🧑‍🚀", "☄️", "🛠️", "🔋", "🪫", "🧲", "💫", "🌕", "🌎", "⭐", "🌟", "🛸", "📡", "🖥️", "⌨️", "🧯", "🔦", "🧪", "🧬", "💾", "💿", "🔩", "⚙️", "🪛", "🔧", "🧊", "🥫", "🍱", "☕", "🎛️", "🕹️", "📶", "🔌", "🧰", "🪬", "🌌", "🌠", "🛎️", "🪞", "🧤", "🥽", "🚨", "🗜️"],
   },
   {
     key: "temple",
     name: "Ancient Temple",
     mechanic: "Silhouette clues",
     emoji: "🗿",
-    props: ["🗿", "🏺", "💎", "🪔", "🐍", "📿", "⚱️", "🦂", "🪙", "🗡️", "🧭", "🕳️"],
+    props: ["🗿", "🏺", "💎", "🪔", "🐍", "📿", "⚱️", "🦂", "🪙", "🗡️", "🧭", "🕳️", "🐫", "🪶", "🔥", "🕯️", "📜", "🗺️", "⛏️", "🪨", "🦴", "💀", "👑", "🛡️", "🏹", "🪝", "🧱", "🚪", "🔑", "🗝️", "🪞", "🐊", "🦇", "🕸️", "🌵", "🏜️", "🧉", "🥁", "🎭", "🪘", "🪄", "🔮", "💰", "📯", "⚔️", "🧿", "🪤", "🐞"],
   },
   {
     key: "future",
     name: "Futuristic City",
     mechanic: "Depth layers",
     emoji: "🌃",
-    props: ["🤖", "🛸", "💠", "🔌", "🪩", "📡", "🧿", "🖥️", "🛵", "🪟", "🔦", "🎛️"],
+    props: ["🤖", "🛸", "💠", "🔌", "🪩", "📡", "🧿", "🖥️", "🛵", "🪟", "🔦", "🎛️", "🕹️", "💾", "🔋", "🧬", "🦾", "🦿", "🥽", "🚨", "📱", "⌚", "🎧", "💳", "🔬", "🧪", "⚡", "🌐", "📶", "🛗", "🚡", "🚈", "🏙️", "🪧", "🧯", "🔩", "⚙️", "🪛", "🖲️", "💿", "📀", "🔐", "🎚️", "🛎️", "🧲", "🪫", "🛰️", "👁️"],
   },
   {
     key: "carnival",
     name: "Carnival Night",
     mechanic: "Distractions",
     emoji: "🎡",
-    props: ["🎡", "🍭", "🎯", "🤹", "🎈", "🍿", "🎪", "🥁", "🎟️", "🧁", "🎠", "🪅"],
+    props: ["🎡", "🍭", "🎯", "🤹", "🎈", "🍿", "🎪", "🥁", "🎟️", "🧁", "🎠", "🪅", "🎢", "🎭", "🎨", "🎤", "🎺", "🪗", "🍦", "🍬", "🍩", "🥤", "🌭", "🍕", "🧸", "🏆", "🎁", "🃏", "🎰", "🎳", "🪀", "🪁", "🤡", "🦄", "🐘", "🦁", "🎬", "📸", "🔔", "🕶️", "👑", "🎀", "🧨", "✨", "🎊", "🎉", "🍫"],
   },
   {
     key: "vault",
     name: "Master Vault",
     mechanic: "Everything at once",
     emoji: "🔐",
-    props: ["🔐", "👑", "💰", "🪙", "💎", "🗝️", "🧨", "🛡️", "📦", "🔮", "⚙️", "🏆"],
+    props: ["🔐", "👑", "💰", "🪙", "💎", "🗝️", "🧨", "🛡️", "📦", "🔮", "⚙️", "🏆", "💍", "📿", "🥇", "🏅", "💵", "💴", "💶", "💷", "🪬", "🗿", "🏺", "⚱️", "🔒", "🔓", "🔑", "📜", "🖼️", "🕰️", "🪞", "⌚", "💾", "🧿", "🗡️", "⚔️", "🏹", "🧰", "🔦", "🧲", "🪤", "📡", "🛰️", "🪆", "🧴", "🎖️", "🪧", "🃏"],
   },
 ];
 
@@ -142,8 +142,8 @@ export function getLevel(id: number): Level {
   const boss = id % 10 === 0;
 
   const objectCount = Math.min(
-    26,
-    Math.round(5 + tier * 2 + within * 2 + loop * 0.8) + (boss ? 2 : 0),
+    30,
+    Math.round(6 + tier * 2.2 + within * 3 + loop * 0.9) + (boss ? 3 : 0),
   );
   const timeLimit = Math.max(35, Math.round(90 - tier * 5 - within * 4 - loop * 2));
   const decoyCount = tier >= 4 ? Math.round(2 + tier * 0.6) : 0;
@@ -180,10 +180,10 @@ export function buildScene(level: Level): { targets: SceneObject[]; clutter: Sce
   const placed: { x: number; y: number }[] = [];
 
   const place = () => {
-    for (let i = 0; i < 40; i++) {
-      const x = 0.07 + rand() * 0.86;
-      const y = 0.09 + rand() * 0.82;
-      if (placed.every((p) => Math.hypot(p.x - x, (p.y - y) * 0.8) > 0.095)) {
+    for (let i = 0; i < 60; i++) {
+      const x = 0.06 + rand() * 0.88;
+      const y = 0.08 + rand() * 0.84;
+      if (placed.every((p) => Math.hypot(p.x - x, (p.y - y) * 0.8) > 0.068)) {
         placed.push({ x, y });
         return { x, y };
       }
@@ -193,9 +193,19 @@ export function buildScene(level: Level): { targets: SceneObject[]; clutter: Sce
     return fallback;
   };
 
+  // Unique glyph pool: every object on screen is one-of-a-kind, so a checklist
+  // entry can never match two different sprites at the same time.
+  const pool = [...new Set(theme.props)];
+  // Fisher-Yates with the seeded PRNG.
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [pool[i], pool[j]] = [pool[j]!, pool[i]!];
+  }
+
+  const targetCount = Math.min(level.objectCount, pool.length);
   const targets: SceneObject[] = [];
-  for (let i = 0; i < level.objectCount; i++) {
-    const glyph = theme.props[i % theme.props.length]!;
+  for (let i = 0; i < targetCount; i++) {
+    const glyph = pool[i]!;
     const pos = place();
     targets.push({
       id: `t${i}`,
@@ -210,10 +220,15 @@ export function buildScene(level: Level): { targets: SceneObject[]; clutter: Sce
     });
   }
 
-  const clutterCount = 10 + Math.round(level.objectCount * 1.2) + level.decoyCount;
+  // Remaining unused glyphs become clutter — denser scenes, still no repeats.
+  const rest = pool.slice(targetCount);
+  const clutterCount = Math.min(
+    rest.length,
+    12 + Math.round(level.objectCount * 1.4) + level.decoyCount,
+  );
   const clutter: SceneObject[] = [];
   for (let i = 0; i < clutterCount; i++) {
-    const glyph = theme.props[Math.floor(rand() * theme.props.length)]!;
+    const glyph = rest[i]!;
     const pos = place();
     clutter.push({
       id: `c${i}`,
