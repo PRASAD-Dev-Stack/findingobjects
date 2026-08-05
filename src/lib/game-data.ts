@@ -180,10 +180,10 @@ export function buildScene(level: Level): { targets: SceneObject[]; clutter: Sce
   const placed: { x: number; y: number }[] = [];
 
   const place = () => {
-    for (let i = 0; i < 40; i++) {
-      const x = 0.07 + rand() * 0.86;
-      const y = 0.09 + rand() * 0.82;
-      if (placed.every((p) => Math.hypot(p.x - x, (p.y - y) * 0.8) > 0.095)) {
+    for (let i = 0; i < 60; i++) {
+      const x = 0.06 + rand() * 0.88;
+      const y = 0.08 + rand() * 0.84;
+      if (placed.every((p) => Math.hypot(p.x - x, (p.y - y) * 0.8) > 0.068)) {
         placed.push({ x, y });
         return { x, y };
       }
