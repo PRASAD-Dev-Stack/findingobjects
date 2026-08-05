@@ -5,9 +5,11 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { to: "/", label: "Home", icon: "🏠" },
   { to: "/levels", label: "Levels", icon: "🗺️" },
+  { to: "/draw", label: "Draw", icon: "✏️" },
   { to: "/multiplayer", label: "Versus", icon: "⚔️" },
   { to: "/profile", label: "You", icon: "🎒" },
 ] as const;
+
 
 export function AppShell({ children, nav = true }: { children: ReactNode; nav?: boolean }) {
   return (

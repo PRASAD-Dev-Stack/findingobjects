@@ -83,6 +83,32 @@ function Home() {
           </Link>
         </div>
 
+        <h2 className="mb-3 mt-6 font-display text-xl font-extrabold">Learn & Create</h2>
+        <div className="grid grid-cols-3 gap-3">
+          <Link to="/draw">
+            <ClayCard tone="primary" className="h-full p-3 text-center">
+              <div className="text-3xl">✏️</div>
+              <p className="font-display text-sm font-extrabold">Trace</p>
+              <p className="text-[10px] font-semibold opacity-80">A·1·shapes</p>
+            </ClayCard>
+          </Link>
+          <Link to="/doodle">
+            <ClayCard tone="accent" className="h-full p-3 text-center">
+              <div className="text-3xl">🖍️</div>
+              <p className="font-display text-sm font-extrabold">Doodle</p>
+              <p className="text-[10px] font-semibold opacity-80">Free draw</p>
+            </ClayCard>
+          </Link>
+          <Link to="/dots">
+            <ClayCard tone="secondary" className="h-full p-3 text-center">
+              <div className="text-3xl">🔢</div>
+              <p className="font-display text-sm font-extrabold">Dots</p>
+              <p className="text-[10px] font-semibold opacity-80">Count & join</p>
+            </ClayCard>
+          </Link>
+        </div>
+
+
         <ClayCard tone="warning" className="mt-4 flex items-center gap-3 p-4">
           <span className="text-3xl">🎁</span>
           <div className="flex-1">
