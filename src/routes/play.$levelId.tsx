@@ -29,10 +29,15 @@ function vibrate(ms: number | number[]) {
 
 function Play() {
   const { levelId } = Route.useParams();
+  const id = Math.min(Math.max(Number(levelId) || 1, 1), TOTAL_LEVELS);
+  // Remount on level change so all progress state resets.
+  return <PlayLevel key={id} id={id} />;
+}
+
+function PlayLevel({ id }: { id: number }) {
   const navigate = useNavigate();
   const { completeLevel } = useProfile();
 
-  const id = Math.min(Math.max(Number(levelId) || 1, 1), TOTAL_LEVELS);
   const level = useMemo(() => getLevel(id), [id]);
   const scene = useMemo(() => buildScene(level), [level]);
 
@@ -41,6 +46,7 @@ function Play() {
   const [hintsUsed, setHintsUsed] = useState(0);
   const [hintFor, setHintFor] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(level.timeLimit);
+
   const [shake, setShake] = useState(false);
   const [burst, setBurst] = useState<{ x: number; y: number; k: number } | null>(null);
   const burstKey = useRef(0);
