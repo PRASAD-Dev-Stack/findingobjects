@@ -142,8 +142,8 @@ export function getLevel(id: number): Level {
   const boss = id % 10 === 0;
 
   const objectCount = Math.min(
-    26,
-    Math.round(5 + tier * 2 + within * 2 + loop * 0.8) + (boss ? 2 : 0),
+    30,
+    Math.round(6 + tier * 2.2 + within * 3 + loop * 0.9) + (boss ? 3 : 0),
   );
   const timeLimit = Math.max(35, Math.round(90 - tier * 5 - within * 4 - loop * 2));
   const decoyCount = tier >= 4 ? Math.round(2 + tier * 0.6) : 0;
