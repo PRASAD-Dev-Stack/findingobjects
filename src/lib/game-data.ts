@@ -193,9 +193,19 @@ export function buildScene(level: Level): { targets: SceneObject[]; clutter: Sce
     return fallback;
   };
 
+  // Unique glyph pool: every object on screen is one-of-a-kind, so a checklist
+  // entry can never match two different sprites at the same time.
+  const pool = [...new Set(theme.props)];
+  // Fisher-Yates with the seeded PRNG.
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [pool[i], pool[j]] = [pool[j]!, pool[i]!];
+  }
+
+  const targetCount = Math.min(level.objectCount, pool.length);
   const targets: SceneObject[] = [];
-  for (let i = 0; i < level.objectCount; i++) {
-    const glyph = theme.props[i % theme.props.length]!;
+  for (let i = 0; i < targetCount; i++) {
+    const glyph = pool[i]!;
     const pos = place();
     targets.push({
       id: `t${i}`,
@@ -210,10 +220,15 @@ export function buildScene(level: Level): { targets: SceneObject[]; clutter: Sce
     });
   }
 
-  const clutterCount = 10 + Math.round(level.objectCount * 1.2) + level.decoyCount;
+  // Remaining unused glyphs become clutter — denser scenes, still no repeats.
+  const rest = pool.slice(targetCount);
+  const clutterCount = Math.min(
+    rest.length,
+    12 + Math.round(level.objectCount * 1.4) + level.decoyCount,
+  );
   const clutter: SceneObject[] = [];
   for (let i = 0; i < clutterCount; i++) {
-    const glyph = theme.props[Math.floor(rand() * theme.props.length)]!;
+    const glyph = rest[i]!;
     const pos = place();
     clutter.push({
       id: `c${i}`,
