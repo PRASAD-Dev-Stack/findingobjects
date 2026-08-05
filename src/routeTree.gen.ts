@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DoodleRouteImport } from './routes/doodle'
 import { Route as DrawRouteImport } from './routes/draw'
 import { Route as LevelsRouteImport } from './routes/levels'
 import { Route as MultiplayerRouteImport } from './routes/multiplayer'
@@ -19,6 +20,11 @@ import { Route as PlayLevelIdRouteImport } from './routes/play.$levelId'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DoodleRoute = DoodleRouteImport.update({
+  id: '/doodle',
+  path: '/doodle',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DrawRoute = DrawRouteImport.update({
@@ -49,6 +55,7 @@ const PlayLevelIdRoute = PlayLevelIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/doodle': typeof DoodleRoute
   '/draw': typeof DrawRoute
   '/levels': typeof LevelsRoute
   '/multiplayer': typeof MultiplayerRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/doodle': typeof DoodleRoute
   '/draw': typeof DrawRoute
   '/levels': typeof LevelsRoute
   '/multiplayer': typeof MultiplayerRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/doodle': typeof DoodleRoute
   '/draw': typeof DrawRoute
   '/levels': typeof LevelsRoute
   '/multiplayer': typeof MultiplayerRoute
@@ -75,12 +84,26 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/draw' | '/levels' | '/multiplayer' | '/profile' | '/play/$levelId'
+    | '/'
+    | '/doodle'
+    | '/draw'
+    | '/levels'
+    | '/multiplayer'
+    | '/profile'
+    | '/play/$levelId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/draw' | '/levels' | '/multiplayer' | '/profile' | '/play/$levelId'
+  to:
+    | '/'
+    | '/doodle'
+    | '/draw'
+    | '/levels'
+    | '/multiplayer'
+    | '/profile'
+    | '/play/$levelId'
   id:
     | '__root__'
     | '/'
+    | '/doodle'
     | '/draw'
     | '/levels'
     | '/multiplayer'
@@ -90,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DoodleRoute: typeof DoodleRoute
   DrawRoute: typeof DrawRoute
   LevelsRoute: typeof LevelsRoute
   MultiplayerRoute: typeof MultiplayerRoute
@@ -104,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/doodle': {
+      id: '/doodle'
+      path: '/doodle'
+      fullPath: '/doodle'
+      preLoaderRoute: typeof DoodleRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/draw': {
@@ -146,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DoodleRoute: DoodleRoute,
   DrawRoute: DrawRoute,
   LevelsRoute: LevelsRoute,
   MultiplayerRoute: MultiplayerRoute,
