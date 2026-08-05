@@ -26,9 +26,9 @@ export function DrawBoard({
   strokes: Stroke[];
   onChange: (s: Stroke[]) => void;
   /** optional painter for a faint reference behind the user's ink */
-  guide?: (ctx: CanvasRenderingContext2D, size: number) => void;
-  disabled?: boolean;
-  className?: string;
+  guide?: ((ctx: CanvasRenderingContext2D, size: number) => void) | undefined;
+  disabled?: boolean | undefined;
+  className?: string | undefined;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
