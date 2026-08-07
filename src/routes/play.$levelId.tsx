@@ -254,10 +254,12 @@ function SceneGlyph({
       style={{
         left: `${o.x * 100}%`,
         top: `${o.y * 100}%`,
-        fontSize: `${o.scale * 30}px`,
+        fontSize: `${Math.max(28, o.scale * 40)}px`,
         transform: `translate(-50%,-50%) rotate(${o.rotation}deg)`,
-        opacity: found ? 0 : 1 - o.camouflage * 0.45,
+        opacity: found ? 0 : 1 - o.camouflage * 0.3,
+        filter: "drop-shadow(0 2px 2px rgba(0,0,0,0.25))",
       }}
+
     >
       {o.glyph}
     </button>
