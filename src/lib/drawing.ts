@@ -17,15 +17,59 @@ export const LETTERS: DrawPrompt[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(
   id: `L${c}`,
   label: c,
   glyph: c,
-  hint: `Trace the letter ${c}`,
+  hint: `Trace the capital letter ${c}`,
 }));
 
-export const NUMBERS: DrawPrompt[] = "0123456789".split("").map((c) => ({
-  id: `N${c}`,
+export const SMALL_LETTERS: DrawPrompt[] = "abcdefghijklmnopqrstuvwxyz".split("").map((c) => ({
+  id: `S${c}`,
   label: c,
   glyph: c,
-  hint: `Trace the number ${c}`,
+  hint: `Trace the small letter ${c}`,
 }));
+
+/** 0 … 999 */
+export const NUMBERS: DrawPrompt[] = Array.from({ length: 1000 }, (_, n) => ({
+  id: `N${n}`,
+  label: String(n),
+  glyph: String(n),
+  hint: `Trace the number ${n}`,
+}));
+
+const ROMAN_MAP: [number, string][] = [
+  [1000, "M"],
+  [900, "CM"],
+  [500, "D"],
+  [400, "CD"],
+  [100, "C"],
+  [90, "XC"],
+  [50, "L"],
+  [40, "XL"],
+  [10, "X"],
+  [9, "IX"],
+  [5, "V"],
+  [4, "IV"],
+  [1, "I"],
+];
+
+export function toRoman(n: number) {
+  let out = "";
+  let left = n;
+  for (const [v, s] of ROMAN_MAP) {
+    while (left >= v) {
+      out += s;
+      left -= v;
+    }
+  }
+  return out;
+}
+
+/** Roman numerals I … C */
+export const ROMAN: DrawPrompt[] = Array.from({ length: 100 }, (_, i) => {
+  const n = i + 1;
+  const g = toRoman(n);
+  return { id: `R${n}`, label: g, glyph: g, hint: `Trace ${g} — that means ${n}` };
+});
+
 
 export const SHAPES: DrawPrompt[] = [
   {
