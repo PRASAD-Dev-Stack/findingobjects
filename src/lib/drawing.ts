@@ -193,10 +193,13 @@ export function drawPrompt(
   ctx.lineCap = "round";
   ctx.lineWidth = lineWidth;
   if (prompt.glyph) {
-    ctx.font = `700 ${size * 0.78}px "Trebuchet MS", system-ui, sans-serif`;
+    const n = prompt.glyph.length;
+    const fs = size * (n <= 1 ? 0.78 : n === 2 ? 0.6 : n === 3 ? 0.45 : 0.34);
+    ctx.font = `700 ${fs}px "Trebuchet MS", system-ui, sans-serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.strokeText(prompt.glyph, size / 2, size * 0.54);
+
   } else if (prompt.path) {
     ctx.beginPath();
     prompt.path(ctx, size);
