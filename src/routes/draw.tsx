@@ -6,7 +6,9 @@ import { DrawBoard } from "@/components/draw-board";
 import {
   LETTERS,
   NUMBERS,
+  ROMAN,
   SHAPES,
+  SMALL_LETTERS,
   drawPrompt,
   scoreDrawing,
   scoreMessage,
@@ -17,16 +19,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/draw")({
   head: () => ({
     meta: [
-      { title: "Trace & Learn — Letters, Numbers, Shapes" },
+      { title: "Trace & Learn — Letters, Numbers, Roman & Shapes" },
       {
         name: "description",
         content:
-          "A kids whiteboard that shows a letter, number or shape and scores how accurately you draw it, from 10% to 100%.",
+          "A kids whiteboard for tracing capital and small letters, numbers up to 999, Roman numerals and shapes — scored from 10% to 100%.",
       },
       { property: "og:title", content: "Trace & Learn — ObjectFinder Pro" },
       {
         property: "og:description",
-        content: "Draw letters, numbers and pictures and get an instant accuracy score.",
+        content: "Trace A-Z, a-z, 0-999, Roman numerals and pictures with instant accuracy scoring.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -36,16 +38,20 @@ export const Route = createFileRoute("/draw")({
 });
 
 const TABS = [
-  { key: "letters", label: "Letters", list: LETTERS, emoji: "🔤" },
-  { key: "numbers", label: "Numbers", list: NUMBERS, emoji: "🔢" },
-  { key: "shapes", label: "Drawings", list: SHAPES, emoji: "🎨" },
+  { key: "letters", label: "A-Z", list: LETTERS, emoji: "🔤" },
+  { key: "small", label: "a-z", list: SMALL_LETTERS, emoji: "🔡" },
+  { key: "numbers", label: "0-999", list: NUMBERS, emoji: "🔢" },
+  { key: "roman", label: "Roman", list: ROMAN, emoji: "🏛️" },
+  { key: "shapes", label: "Draw", list: SHAPES, emoji: "🎨" },
 ] as const;
 
 const INK = ["#2b2b45", "#ef476f", "#118ab2", "#06d6a0", "#ffb703", "#8338ec"];
+const PAGE = 50;
 
 function DrawPage() {
   const [tab, setTab] = useState<(typeof TABS)[number]["key"]>("letters");
   const [index, setIndex] = useState(0);
+  const [page, setPage] = useState(0);
   const [strokes, setStrokes] = useState<Stroke[]>([]);
   const [score, setScore] = useState<number | null>(null);
   const [ghost, setGhost] = useState(true);
@@ -53,6 +59,9 @@ function DrawPage() {
 
   const list = TABS.find((t) => t.key === tab)!.list;
   const prompt = list[index % list.length]!;
+  const pages = Math.ceil(list.length / PAGE);
+  const pageItems = list.slice(page * PAGE, page * PAGE + PAGE);
+
 
   const guide = useMemo(
     () =>
@@ -67,10 +76,14 @@ function DrawPage() {
   );
 
   const reset = (nextIndex?: number) => {
-    if (nextIndex !== undefined) setIndex(nextIndex);
+    if (nextIndex !== undefined) {
+      setIndex(nextIndex);
+      setPage(Math.floor(nextIndex / PAGE));
+    }
     setStrokes([]);
     setScore(null);
   };
+
 
   const msg = score !== null ? scoreMessage(score) : null;
 
@@ -79,15 +92,22 @@ function DrawPage() {
       <TopBar
         title="Trace & Learn"
         right={
-          <Link to="/doodle">
-            <ClayButton tone="accent" size="sm">
-              🖍️ Doodle
-            </ClayButton>
-          </Link>
+          <div className="flex gap-2">
+            <Link to="/paint">
+              <ClayButton tone="secondary" size="sm">
+                🎨 Paint
+              </ClayButton>
+            </Link>
+            <Link to="/doodle">
+              <ClayButton tone="accent" size="sm">
+                🖍️
+              </ClayButton>
+            </Link>
+          </div>
         }
       />
 
-      <div className="mb-4 flex gap-2">
+      <div className="mb-4 flex flex-wrap gap-2">
         {TABS.map((t) => (
           <ClayButton
             key={t.key}
@@ -96,6 +116,7 @@ function DrawPage() {
             className="flex-1"
             onClick={() => {
               setTab(t.key);
+              setPage(0);
               reset(0);
             }}
           >
@@ -103,6 +124,7 @@ function DrawPage() {
           </ClayButton>
         ))}
       </div>
+
 
       <ClayCard className="mb-3 flex items-center justify-between px-4 py-3">
         <div>
@@ -183,20 +205,42 @@ function DrawPage() {
         </ClayCard>
       )}
 
-      <div className="mt-4 flex flex-wrap gap-2">
-        {list.map((p, i) => (
-          <button
-            key={p.id}
-            onClick={() => reset(i)}
-            className={cn(
-              "clay-sm h-10 w-10 rounded-xl bg-card font-display text-sm font-extrabold transition-transform active:scale-90",
-              i === index && "bg-primary text-primary-foreground",
-            )}
+      {pages > 1 && (
+        <div className="mt-4 flex items-center gap-2">
+          <ClayButton size="sm" tone="muted" onClick={() => setPage((p) => Math.max(0, p - 1))}>
+            ◀
+          </ClayButton>
+          <span className="flex-1 text-center text-xs font-bold text-muted-foreground">
+            {pageItems[0]?.label} – {pageItems[pageItems.length - 1]?.label}
+          </span>
+          <ClayButton
+            size="sm"
+            tone="muted"
+            onClick={() => setPage((p) => Math.min(pages - 1, p + 1))}
           >
-            {p.glyph ?? p.label.slice(0, 2)}
-          </button>
-        ))}
+            ▶
+          </ClayButton>
+        </div>
+      )}
+
+      <div className="mt-3 flex flex-wrap gap-2">
+        {pageItems.map((p, i) => {
+          const realIndex = page * PAGE + i;
+          return (
+            <button
+              key={p.id}
+              onClick={() => reset(realIndex)}
+              className={cn(
+                "clay-sm h-10 min-w-10 rounded-xl bg-card px-2 font-display text-sm font-extrabold transition-transform active:scale-90",
+                realIndex === index && "bg-primary text-primary-foreground",
+              )}
+            >
+              {p.glyph ?? p.label.slice(0, 2)}
+            </button>
+          );
+        })}
       </div>
+
     </AppShell>
   );
 }

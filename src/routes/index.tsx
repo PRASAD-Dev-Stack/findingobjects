@@ -89,9 +89,17 @@ function Home() {
             <ClayCard tone="primary" className="h-full p-3 text-center">
               <div className="text-3xl">✏️</div>
               <p className="font-display text-sm font-extrabold">Trace</p>
-              <p className="text-[10px] font-semibold opacity-80">A·1·shapes</p>
+              <p className="text-[10px] font-semibold opacity-80">A·a·999·Ⅶ</p>
             </ClayCard>
           </Link>
+          <Link to="/paint">
+            <ClayCard tone="warning" className="h-full p-3 text-center">
+              <div className="text-3xl">🎨</div>
+              <p className="font-display text-sm font-extrabold">Paint</p>
+              <p className="text-[10px] font-semibold opacity-80">49 pictures</p>
+            </ClayCard>
+          </Link>
+
           <Link to="/doodle">
             <ClayCard tone="accent" className="h-full p-3 text-center">
               <div className="text-3xl">🖍️</div>

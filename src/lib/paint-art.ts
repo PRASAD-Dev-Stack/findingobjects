@@ -1,0 +1,627 @@
+// Paint-by-region artwork library. Every shape lives on a 0..100 viewBox so the
+// SVG scales to any board size. Each part is a separately tappable region the
+// child can fill with a colour (or clear again).
+
+export type ArtPart = { name: string; d: string };
+export type Artwork = { id: string; name: string; emoji: string; parts: ArtPart[] };
+
+/** rectangle (optionally as a rounded-ish box via plain corners) */
+const R = (x: number, y: number, w: number, h: number) =>
+  `M${x} ${y}H${x + w}V${y + h}H${x}Z`;
+
+/** ellipse / circle */
+const E = (cx: number, cy: number, rx: number, ry = rx) =>
+  `M${cx - rx} ${cy}a${rx} ${ry} 0 1 0 ${rx * 2} 0a${rx} ${ry} 0 1 0 ${-rx * 2} 0Z`;
+
+/** polygon from flat pairs */
+const P = (...pts: number[]) => {
+  let d = `M${pts[0]} ${pts[1]}`;
+  for (let i = 2; i < pts.length; i += 2) d += `L${pts[i]} ${pts[i + 1]}`;
+  return d + "Z";
+};
+
+const part = (name: string, d: string): ArtPart => ({ name, d });
+
+export const ARTWORKS: Artwork[] = [
+  {
+    id: "house",
+    name: "Cozy House",
+    emoji: "🏠",
+    parts: [
+      part("Roof", P(50, 10, 92, 45, 8, 45)),
+      part("Chimney", R(70, 18, 10, 20)),
+      part("Wall", R(16, 45, 68, 45)),
+      part("Door", R(42, 62, 16, 28)),
+      part("Left window", R(24, 54, 13, 13)),
+      part("Right window", R(64, 54, 13, 13)),
+    ],
+  },
+  {
+    id: "tree",
+    name: "Big Tree",
+    emoji: "🌳",
+    parts: [
+      part("Top leaves", E(50, 30, 26, 22)),
+      part("Left leaves", E(30, 48, 20, 16)),
+      part("Right leaves", E(70, 48, 20, 16)),
+      part("Trunk", R(44, 55, 12, 35)),
+      part("Grass", P(6, 90, 94, 90, 94, 96, 6, 96)),
+    ],
+  },
+  {
+    id: "car",
+    name: "Little Car",
+    emoji: "🚗",
+    parts: [
+      part("Roof", P(30, 30, 68, 30, 78, 52, 22, 52)),
+      part("Body", R(12, 52, 76, 20)),
+      part("Window", P(36, 34, 62, 34, 68, 50, 32, 50)),
+      part("Left wheel", E(30, 74, 10)),
+      part("Right wheel", E(70, 74, 10)),
+    ],
+  },
+  {
+    id: "boat",
+    name: "Sail Boat",
+    emoji: "⛵",
+    parts: [
+      part("Hull", P(14, 66, 86, 66, 74, 84, 26, 84)),
+      part("Mast", R(48, 18, 4, 48)),
+      part("Big sail", P(52, 20, 82, 62, 52, 62)),
+      part("Small sail", P(46, 24, 46, 62, 22, 62)),
+      part("Water", R(6, 84, 88, 10)),
+    ],
+  },
+  {
+    id: "fish",
+    name: "Happy Fish",
+    emoji: "🐟",
+    parts: [
+      part("Body", E(46, 50, 30, 20)),
+      part("Tail", P(76, 50, 94, 32, 94, 68)),
+      part("Top fin", P(40, 30, 58, 30, 48, 18)),
+      part("Eye", E(30, 44, 5)),
+      part("Bubbles", E(14, 26, 6)),
+    ],
+  },
+  {
+    id: "cat",
+    name: "Sleepy Cat",
+    emoji: "🐱",
+    parts: [
+      part("Head", E(50, 40, 26, 24)),
+      part("Left ear", P(28, 24, 40, 12, 44, 28)),
+      part("Right ear", P(72, 24, 60, 12, 56, 28)),
+      part("Body", E(50, 78, 24, 16)),
+      part("Nose", P(46, 44, 54, 44, 50, 50)),
+    ],
+  },
+  {
+    id: "dog",
+    name: "Good Dog",
+    emoji: "🐶",
+    parts: [
+      part("Head", E(50, 40, 24, 22)),
+      part("Left ear", E(24, 40, 8, 16)),
+      part("Right ear", E(76, 40, 8, 16)),
+      part("Snout", E(50, 54, 12, 9)),
+      part("Body", E(50, 80, 22, 14)),
+    ],
+  },
+  {
+    id: "flower",
+    name: "Sunny Flower",
+    emoji: "🌸",
+    parts: [
+      part("Petal 1", E(50, 26, 12)),
+      part("Petal 2", E(74, 44, 12)),
+      part("Petal 3", E(64, 70, 12)),
+      part("Petal 4", E(36, 70, 12)),
+      part("Petal 5", E(26, 44, 12)),
+      part("Middle", E(50, 50, 11)),
+      part("Stem", R(47, 60, 6, 34)),
+    ],
+  },
+  {
+    id: "sun",
+    name: "Big Sun",
+    emoji: "☀️",
+    parts: [
+      part("Sun", E(50, 50, 24)),
+      part("Ray up", R(46, 8, 8, 18)),
+      part("Ray down", R(46, 74, 8, 18)),
+      part("Ray left", R(8, 46, 18, 8)),
+      part("Ray right", R(74, 46, 18, 8)),
+    ],
+  },
+  {
+    id: "rocket",
+    name: "Rocket",
+    emoji: "🚀",
+    parts: [
+      part("Nose", P(50, 8, 66, 34, 34, 34)),
+      part("Body", R(34, 34, 32, 40)),
+      part("Window", E(50, 48, 8)),
+      part("Left fin", P(34, 60, 34, 82, 20, 82)),
+      part("Right fin", P(66, 60, 66, 82, 80, 82)),
+      part("Flame", P(42, 74, 58, 74, 50, 94)),
+    ],
+  },
+  {
+    id: "robot",
+    name: "Robot Pal",
+    emoji: "🤖",
+    parts: [
+      part("Head", R(32, 18, 36, 26)),
+      part("Antenna", R(48, 8, 4, 10)),
+      part("Left eye", E(42, 30, 5)),
+      part("Right eye", E(58, 30, 5)),
+      part("Body", R(28, 46, 44, 34)),
+      part("Left leg", R(34, 80, 10, 14)),
+      part("Right leg", R(56, 80, 10, 14)),
+    ],
+  },
+  {
+    id: "butterfly",
+    name: "Butterfly",
+    emoji: "🦋",
+    parts: [
+      part("Top left wing", E(30, 36, 18, 16)),
+      part("Top right wing", E(70, 36, 18, 16)),
+      part("Low left wing", E(34, 66, 14, 14)),
+      part("Low right wing", E(66, 66, 14, 14)),
+      part("Body", E(50, 52, 5, 24)),
+    ],
+  },
+  {
+    id: "icecream",
+    name: "Ice Cream",
+    emoji: "🍦",
+    parts: [
+      part("Top scoop", E(50, 26, 16)),
+      part("Middle scoop", E(38, 42, 14)),
+      part("Side scoop", E(62, 42, 14)),
+      part("Cone", P(30, 52, 70, 52, 50, 94)),
+    ],
+  },
+  {
+    id: "cupcake",
+    name: "Cupcake",
+    emoji: "🧁",
+    parts: [
+      part("Frosting", E(50, 38, 26, 20)),
+      part("Cherry", E(50, 16, 8)),
+      part("Cup", P(26, 56, 74, 56, 66, 90, 34, 90)),
+      part("Sprinkle", R(44, 62, 12, 6)),
+    ],
+  },
+  {
+    id: "balloon",
+    name: "Balloon",
+    emoji: "🎈",
+    parts: [
+      part("Balloon", E(50, 38, 24, 28)),
+      part("Knot", P(46, 66, 54, 66, 50, 74)),
+      part("String", R(49, 74, 2, 22)),
+    ],
+  },
+  {
+    id: "train",
+    name: "Train",
+    emoji: "🚂",
+    parts: [
+      part("Cabin", R(14, 30, 32, 34)),
+      part("Body", R(46, 44, 42, 20)),
+      part("Chimney", R(72, 26, 10, 18)),
+      part("Window", R(22, 38, 16, 14)),
+      part("Wheel 1", E(28, 72, 9)),
+      part("Wheel 2", E(56, 72, 9)),
+      part("Wheel 3", E(78, 72, 9)),
+    ],
+  },
+  {
+    id: "bus",
+    name: "School Bus",
+    emoji: "🚌",
+    parts: [
+      part("Body", R(10, 30, 80, 38)),
+      part("Window 1", R(18, 36, 16, 14)),
+      part("Window 2", R(40, 36, 16, 14)),
+      part("Window 3", R(62, 36, 16, 14)),
+      part("Wheel left", E(28, 72, 10)),
+      part("Wheel right", E(72, 72, 10)),
+    ],
+  },
+  {
+    id: "plane",
+    name: "Airplane",
+    emoji: "✈️",
+    parts: [
+      part("Body", E(50, 50, 34, 10)),
+      part("Wing", P(44, 46, 60, 46, 50, 18)),
+      part("Tail wing", P(44, 54, 60, 54, 50, 82)),
+      part("Tail", P(16, 42, 28, 50, 16, 58)),
+    ],
+  },
+  {
+    id: "umbrella",
+    name: "Umbrella",
+    emoji: "☂️",
+    parts: [
+      part("Left canopy", P(50, 18, 50, 52, 10, 52)),
+      part("Right canopy", P(50, 18, 50, 52, 90, 52)),
+      part("Handle", R(47, 52, 6, 34)),
+      part("Rain drop", E(20, 78, 6)),
+    ],
+  },
+  {
+    id: "kite",
+    name: "Kite",
+    emoji: "🪁",
+    parts: [
+      part("Top left", P(50, 10, 50, 50, 24, 40)),
+      part("Top right", P(50, 10, 50, 50, 76, 40)),
+      part("Bottom left", P(50, 50, 24, 40, 50, 82)),
+      part("Bottom right", P(50, 50, 76, 40, 50, 82)),
+      part("Tail", R(48, 82, 4, 14)),
+    ],
+  },
+  {
+    id: "snowman",
+    name: "Snowman",
+    emoji: "⛄",
+    parts: [
+      part("Head", E(50, 26, 15)),
+      part("Middle", E(50, 54, 20)),
+      part("Bottom", E(50, 82, 24, 14)),
+      part("Hat", R(38, 6, 24, 10)),
+      part("Nose", P(50, 26, 66, 29, 50, 31)),
+    ],
+  },
+  {
+    id: "penguin",
+    name: "Penguin",
+    emoji: "🐧",
+    parts: [
+      part("Body", E(50, 54, 26, 34)),
+      part("Tummy", E(50, 60, 16, 24)),
+      part("Beak", P(44, 34, 58, 38, 44, 42)),
+      part("Left foot", E(38, 90, 9, 5)),
+      part("Right foot", E(62, 90, 9, 5)),
+    ],
+  },
+  {
+    id: "owl",
+    name: "Wise Owl",
+    emoji: "🦉",
+    parts: [
+      part("Body", E(50, 56, 26, 32)),
+      part("Left eye", E(40, 42, 10)),
+      part("Right eye", E(60, 42, 10)),
+      part("Beak", P(46, 52, 54, 52, 50, 62)),
+      part("Branch", R(14, 90, 72, 6)),
+    ],
+  },
+  {
+    id: "frog",
+    name: "Frog",
+    emoji: "🐸",
+    parts: [
+      part("Body", E(50, 60, 28, 22)),
+      part("Left eye", E(36, 32, 11)),
+      part("Right eye", E(64, 32, 11)),
+      part("Left foot", E(22, 82, 10, 6)),
+      part("Right foot", E(78, 82, 10, 6)),
+    ],
+  },
+  {
+    id: "ladybug",
+    name: "Ladybug",
+    emoji: "🐞",
+    parts: [
+      part("Shell", E(50, 56, 30, 26)),
+      part("Head", E(50, 26, 14, 12)),
+      part("Spot 1", E(36, 50, 6)),
+      part("Spot 2", E(64, 50, 6)),
+      part("Spot 3", E(50, 70, 6)),
+    ],
+  },
+  {
+    id: "bee",
+    name: "Buzzy Bee",
+    emoji: "🐝",
+    parts: [
+      part("Body", E(50, 58, 26, 20)),
+      part("Stripe", R(44, 40, 12, 38)),
+      part("Head", E(50, 30, 13)),
+      part("Left wing", E(30, 34, 12, 8)),
+      part("Right wing", E(70, 34, 12, 8)),
+    ],
+  },
+  {
+    id: "whale",
+    name: "Whale",
+    emoji: "🐳",
+    parts: [
+      part("Body", E(46, 58, 34, 22)),
+      part("Tail", P(78, 58, 96, 40, 96, 76)),
+      part("Spout", R(38, 20, 6, 20)),
+      part("Water", R(6, 86, 88, 8)),
+    ],
+  },
+  {
+    id: "crab",
+    name: "Crab",
+    emoji: "🦀",
+    parts: [
+      part("Body", E(50, 58, 26, 18)),
+      part("Left claw", E(18, 46, 11, 9)),
+      part("Right claw", E(82, 46, 11, 9)),
+      part("Left eye", E(42, 36, 6)),
+      part("Right eye", E(58, 36, 6)),
+    ],
+  },
+  {
+    id: "star",
+    name: "Shining Star",
+    emoji: "⭐",
+    parts: [
+      part("Star", P(50, 8, 61, 38, 94, 38, 67, 58, 77, 90, 50, 70, 23, 90, 33, 58, 6, 38, 39, 38)),
+      part("Sparkle left", E(14, 14, 6)),
+      part("Sparkle right", E(86, 16, 5)),
+    ],
+  },
+  {
+    id: "rainbow",
+    name: "Rainbow",
+    emoji: "🌈",
+    parts: [
+      part("Arc 1", "M8 80a42 42 0 0 1 84 0h-10a32 32 0 0 0-64 0Z"),
+      part("Arc 2", "M18 80a32 32 0 0 1 64 0h-10a22 22 0 0 0-44 0Z"),
+      part("Arc 3", "M28 80a22 22 0 0 1 44 0h-10a12 12 0 0 0-24 0Z"),
+      part("Cloud", E(20, 84, 14, 9)),
+    ],
+  },
+  {
+    id: "mushroom",
+    name: "Mushroom",
+    emoji: "🍄",
+    parts: [
+      part("Cap", "M12 52a38 30 0 0 1 76 0Z"),
+      part("Spot 1", E(34, 40, 7)),
+      part("Spot 2", E(62, 36, 6)),
+      part("Stem", R(40, 52, 20, 36)),
+    ],
+  },
+  {
+    id: "castle",
+    name: "Castle",
+    emoji: "🏰",
+    parts: [
+      part("Left tower", R(12, 34, 20, 56)),
+      part("Right tower", R(68, 34, 20, 56)),
+      part("Middle", R(32, 48, 36, 42)),
+      part("Left roof", P(22, 12, 34, 34, 10, 34)),
+      part("Right roof", P(78, 12, 90, 34, 66, 34)),
+      part("Gate", R(43, 66, 14, 24)),
+    ],
+  },
+  {
+    id: "windmill",
+    name: "Windmill",
+    emoji: "🌾",
+    parts: [
+      part("Tower", P(38, 40, 62, 40, 70, 92, 30, 92)),
+      part("Blade up", R(47, 6, 6, 30)),
+      part("Blade down", R(47, 44, 6, 30)),
+      part("Blade left", R(14, 37, 32, 6)),
+      part("Blade right", R(54, 37, 32, 6)),
+      part("Door", R(44, 72, 12, 20)),
+    ],
+  },
+  {
+    id: "lighthouse",
+    name: "Lighthouse",
+    emoji: "🗼",
+    parts: [
+      part("Tower", P(36, 30, 64, 30, 72, 90, 28, 90)),
+      part("Lamp", R(42, 16, 16, 14)),
+      part("Roof", P(50, 6, 62, 16, 38, 16)),
+      part("Stripe", R(34, 52, 32, 10)),
+      part("Sea", R(6, 90, 88, 6)),
+    ],
+  },
+  {
+    id: "tent",
+    name: "Camping Tent",
+    emoji: "⛺",
+    parts: [
+      part("Left side", P(50, 18, 50, 84, 10, 84)),
+      part("Right side", P(50, 18, 50, 84, 90, 84)),
+      part("Door", P(50, 40, 62, 84, 38, 84)),
+      part("Fire", E(80, 88, 8, 6)),
+    ],
+  },
+  {
+    id: "cactus",
+    name: "Cactus",
+    emoji: "🌵",
+    parts: [
+      part("Trunk", R(42, 22, 16, 68)),
+      part("Left arm", R(20, 44, 22, 10)),
+      part("Left up", R(20, 30, 10, 20)),
+      part("Right arm", R(58, 56, 22, 10)),
+      part("Right up", R(70, 40, 10, 22)),
+      part("Pot", P(30, 82, 70, 82, 64, 96, 36, 96)),
+    ],
+  },
+  {
+    id: "apple",
+    name: "Apple",
+    emoji: "🍎",
+    parts: [
+      part("Left half", "M50 26C30 14 10 32 14 56c4 24 24 38 36 34Z"),
+      part("Right half", "M50 26c20-12 40 6 36 30-4 24-24 38-36 34Z"),
+      part("Leaf", E(62, 20, 10, 5)),
+      part("Stem", R(48, 10, 4, 14)),
+    ],
+  },
+  {
+    id: "watermelon",
+    name: "Watermelon",
+    emoji: "🍉",
+    parts: [
+      part("Rind", "M10 34h80a40 40 0 0 1-80 0Z"),
+      part("Flesh", "M18 40h64a32 32 0 0 1-64 0Z"),
+      part("Seed 1", E(40, 52, 4, 6)),
+      part("Seed 2", E(58, 52, 4, 6)),
+      part("Seed 3", E(50, 64, 4, 6)),
+    ],
+  },
+  {
+    id: "pizza",
+    name: "Pizza Slice",
+    emoji: "🍕",
+    parts: [
+      part("Crust", P(14, 82, 86, 82, 78, 92, 22, 92)),
+      part("Slice", P(50, 10, 86, 82, 14, 82)),
+      part("Topping 1", E(50, 46, 7)),
+      part("Topping 2", E(38, 66, 7)),
+      part("Topping 3", E(64, 68, 7)),
+    ],
+  },
+  {
+    id: "burger",
+    name: "Burger",
+    emoji: "🍔",
+    parts: [
+      part("Top bun", "M14 46a36 26 0 0 1 72 0Z"),
+      part("Salad", R(14, 46, 72, 10)),
+      part("Patty", R(14, 56, 72, 12)),
+      part("Bottom bun", "M14 68h72a30 16 0 0 1-72 0Z"),
+    ],
+  },
+  {
+    id: "teddy",
+    name: "Teddy Bear",
+    emoji: "🧸",
+    parts: [
+      part("Head", E(50, 32, 20)),
+      part("Left ear", E(30, 16, 9)),
+      part("Right ear", E(70, 16, 9)),
+      part("Body", E(50, 68, 24, 24)),
+      part("Left arm", E(22, 62, 9, 12)),
+      part("Right arm", E(78, 62, 9, 12)),
+    ],
+  },
+  {
+    id: "duck",
+    name: "Duck",
+    emoji: "🦆",
+    parts: [
+      part("Body", E(46, 62, 28, 20)),
+      part("Head", E(70, 32, 15)),
+      part("Beak", P(84, 30, 98, 34, 84, 38)),
+      part("Wing", E(42, 62, 14, 9)),
+      part("Water", R(6, 84, 88, 8)),
+    ],
+  },
+  {
+    id: "elephant",
+    name: "Elephant",
+    emoji: "🐘",
+    parts: [
+      part("Body", E(46, 58, 30, 24)),
+      part("Head", E(74, 46, 18, 18)),
+      part("Ear", E(64, 40, 10, 12)),
+      part("Trunk", R(80, 56, 8, 32)),
+      part("Leg", R(28, 76, 12, 18)),
+    ],
+  },
+  {
+    id: "giraffe",
+    name: "Giraffe",
+    emoji: "🦒",
+    parts: [
+      part("Body", E(40, 68, 26, 18)),
+      part("Neck", R(58, 24, 14, 44)),
+      part("Head", E(70, 20, 14, 10)),
+      part("Spot 1", E(34, 66, 6)),
+      part("Spot 2", E(50, 72, 6)),
+    ],
+  },
+  {
+    id: "turtle",
+    name: "Turtle",
+    emoji: "🐢",
+    parts: [
+      part("Shell", "M18 66a32 26 0 0 1 64 0Z"),
+      part("Shell plate", E(50, 56, 12, 9)),
+      part("Head", E(88, 60, 9, 7)),
+      part("Leg left", E(26, 72, 8, 6)),
+      part("Leg right", E(70, 72, 8, 6)),
+    ],
+  },
+  {
+    id: "guitar",
+    name: "Guitar",
+    emoji: "🎸",
+    parts: [
+      part("Body", E(44, 68, 24, 22)),
+      part("Hole", E(44, 68, 8)),
+      part("Neck", P(56, 52, 66, 44, 88, 12, 80, 6, 50, 40)),
+      part("Head", P(88, 12, 96, 6, 88, 2)),
+    ],
+  },
+  {
+    id: "clock",
+    name: "Clock",
+    emoji: "🕰️",
+    parts: [
+      part("Case", E(50, 50, 34)),
+      part("Face", E(50, 50, 26)),
+      part("Big hand", R(48, 28, 4, 24)),
+      part("Small hand", R(50, 48, 20, 4)),
+    ],
+  },
+  {
+    id: "teapot",
+    name: "Teapot",
+    emoji: "🫖",
+    parts: [
+      part("Pot", E(48, 60, 28, 22)),
+      part("Lid", "M28 46a20 12 0 0 1 40 0Z"),
+      part("Spout", P(76, 50, 94, 40, 94, 50, 76, 62)),
+      part("Handle", E(22, 58, 8, 12)),
+    ],
+  },
+  {
+    id: "birdhouse",
+    name: "Bird House",
+    emoji: "🐦",
+    parts: [
+      part("Roof", P(50, 12, 88, 40, 12, 40)),
+      part("Box", R(22, 40, 56, 40)),
+      part("Hole", E(50, 56, 11)),
+      part("Perch", R(46, 68, 8, 16)),
+      part("Bird", E(74, 30, 8, 6)),
+    ],
+  },
+];
+
+export const PAINT_COLORS = [
+  "#ef476f",
+  "#ff8fa3",
+  "#ffb703",
+  "#ffd166",
+  "#06d6a0",
+  "#2ec4b6",
+  "#118ab2",
+  "#4cc9f0",
+  "#8338ec",
+  "#c77dff",
+  "#a0522d",
+  "#f4a261",
+  "#2b2b45",
+  "#ffffff",
+];

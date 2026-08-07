@@ -1,6 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ClayButton, ClayCard } from "@/components/clay";
+import { SceneBackdrop } from "@/components/scene-backdrop";
+
 import { useProfile } from "@/hooks/use-profile";
 import { TOTAL_LEVELS, buildScene, getLevel } from "@/lib/game-data";
 import { cn } from "@/lib/utils";
@@ -123,7 +125,8 @@ function PlayLevel({ id }: { id: number }) {
             shake && "animate-shake",
           )}
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,var(--color-secondary),transparent_60%),radial-gradient(circle_at_75%_80%,var(--color-accent),transparent_55%)] opacity-70" />
+          <SceneBackdrop theme={level.themeKey} />
+
 
           {scene.clutter.map((o) => (
             <SceneGlyph key={o.id} o={o} onTap={(x, y) => hit(o.id, x, y, false)} />
@@ -251,10 +254,12 @@ function SceneGlyph({
       style={{
         left: `${o.x * 100}%`,
         top: `${o.y * 100}%`,
-        fontSize: `${o.scale * 30}px`,
+        fontSize: `${Math.max(28, o.scale * 40)}px`,
         transform: `translate(-50%,-50%) rotate(${o.rotation}deg)`,
-        opacity: found ? 0 : 1 - o.camouflage * 0.45,
+        opacity: found ? 0 : 1 - o.camouflage * 0.3,
+        filter: "drop-shadow(0 2px 2px rgba(0,0,0,0.25))",
       }}
+
     >
       {o.glyph}
     </button>
