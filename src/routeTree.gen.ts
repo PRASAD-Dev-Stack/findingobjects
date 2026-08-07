@@ -15,6 +15,7 @@ import { Route as DotsRouteImport } from './routes/dots'
 import { Route as DrawRouteImport } from './routes/draw'
 import { Route as LevelsRouteImport } from './routes/levels'
 import { Route as MultiplayerRouteImport } from './routes/multiplayer'
+import { Route as PaintRouteImport } from './routes/paint'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PlayLevelIdRouteImport } from './routes/play.$levelId'
 
@@ -48,6 +49,11 @@ const MultiplayerRoute = MultiplayerRouteImport.update({
   path: '/multiplayer',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PaintRoute = PaintRouteImport.update({
+  id: '/paint',
+  path: '/paint',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/draw': typeof DrawRoute
   '/levels': typeof LevelsRoute
   '/multiplayer': typeof MultiplayerRoute
+  '/paint': typeof PaintRoute
   '/profile': typeof ProfileRoute
   '/play/$levelId': typeof PlayLevelIdRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/draw': typeof DrawRoute
   '/levels': typeof LevelsRoute
   '/multiplayer': typeof MultiplayerRoute
+  '/paint': typeof PaintRoute
   '/profile': typeof ProfileRoute
   '/play/$levelId': typeof PlayLevelIdRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/draw': typeof DrawRoute
   '/levels': typeof LevelsRoute
   '/multiplayer': typeof MultiplayerRoute
+  '/paint': typeof PaintRoute
   '/profile': typeof ProfileRoute
   '/play/$levelId': typeof PlayLevelIdRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/draw'
     | '/levels'
     | '/multiplayer'
+    | '/paint'
     | '/profile'
     | '/play/$levelId'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/draw'
     | '/levels'
     | '/multiplayer'
+    | '/paint'
     | '/profile'
     | '/play/$levelId'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/draw'
     | '/levels'
     | '/multiplayer'
+    | '/paint'
     | '/profile'
     | '/play/$levelId'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   DrawRoute: typeof DrawRoute
   LevelsRoute: typeof LevelsRoute
   MultiplayerRoute: typeof MultiplayerRoute
+  PaintRoute: typeof PaintRoute
   ProfileRoute: typeof ProfileRoute
   PlayLevelIdRoute: typeof PlayLevelIdRoute
 }
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MultiplayerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/paint': {
+      id: '/paint'
+      path: '/paint'
+      fullPath: '/paint'
+      preLoaderRoute: typeof PaintRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile': {
       id: '/profile'
       path: '/profile'
@@ -202,19 +222,10 @@ const rootRouteChildren: RootRouteChildren = {
   DrawRoute: DrawRoute,
   LevelsRoute: LevelsRoute,
   MultiplayerRoute: MultiplayerRoute,
+  PaintRoute: PaintRoute,
   ProfileRoute: ProfileRoute,
   PlayLevelIdRoute: PlayLevelIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
