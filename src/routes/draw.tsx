@@ -76,10 +76,14 @@ function DrawPage() {
   );
 
   const reset = (nextIndex?: number) => {
-    if (nextIndex !== undefined) setIndex(nextIndex);
+    if (nextIndex !== undefined) {
+      setIndex(nextIndex);
+      setPage(Math.floor(nextIndex / PAGE));
+    }
     setStrokes([]);
     setScore(null);
   };
+
 
   const msg = score !== null ? scoreMessage(score) : null;
 
