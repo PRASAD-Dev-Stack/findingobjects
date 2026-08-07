@@ -1,3 +1,4 @@
+import type { ReactElement } from "react";
 import type { ThemeKey } from "@/lib/game-data";
 
 /**
@@ -10,7 +11,8 @@ type Scene = {
   sky: [string, string];
   character: string;
   characterPos: { left: string; bottom: string };
-  art: JSX.Element;
+  art: ReactElement;
+
 };
 
 const SCENES: Record<ThemeKey, Scene> = {
