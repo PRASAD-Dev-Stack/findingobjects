@@ -88,15 +88,22 @@ function DrawPage() {
       <TopBar
         title="Trace & Learn"
         right={
-          <Link to="/doodle">
-            <ClayButton tone="accent" size="sm">
-              🖍️ Doodle
-            </ClayButton>
-          </Link>
+          <div className="flex gap-2">
+            <Link to="/paint">
+              <ClayButton tone="secondary" size="sm">
+                🎨 Paint
+              </ClayButton>
+            </Link>
+            <Link to="/doodle">
+              <ClayButton tone="accent" size="sm">
+                🖍️
+              </ClayButton>
+            </Link>
+          </div>
         }
       />
 
-      <div className="mb-4 flex gap-2">
+      <div className="mb-4 flex flex-wrap gap-2">
         {TABS.map((t) => (
           <ClayButton
             key={t.key}
@@ -105,6 +112,7 @@ function DrawPage() {
             className="flex-1"
             onClick={() => {
               setTab(t.key);
+              setPage(0);
               reset(0);
             }}
           >
@@ -112,6 +120,7 @@ function DrawPage() {
           </ClayButton>
         ))}
       </div>
+
 
       <ClayCard className="mb-3 flex items-center justify-between px-4 py-3">
         <div>
