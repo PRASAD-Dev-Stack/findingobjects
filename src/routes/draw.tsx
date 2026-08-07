@@ -201,20 +201,42 @@ function DrawPage() {
         </ClayCard>
       )}
 
-      <div className="mt-4 flex flex-wrap gap-2">
-        {list.map((p, i) => (
-          <button
-            key={p.id}
-            onClick={() => reset(i)}
-            className={cn(
-              "clay-sm h-10 w-10 rounded-xl bg-card font-display text-sm font-extrabold transition-transform active:scale-90",
-              i === index && "bg-primary text-primary-foreground",
-            )}
+      {pages > 1 && (
+        <div className="mt-4 flex items-center gap-2">
+          <ClayButton size="sm" tone="muted" onClick={() => setPage((p) => Math.max(0, p - 1))}>
+            ◀
+          </ClayButton>
+          <span className="flex-1 text-center text-xs font-bold text-muted-foreground">
+            {pageItems[0]?.label} – {pageItems[pageItems.length - 1]?.label}
+          </span>
+          <ClayButton
+            size="sm"
+            tone="muted"
+            onClick={() => setPage((p) => Math.min(pages - 1, p + 1))}
           >
-            {p.glyph ?? p.label.slice(0, 2)}
-          </button>
-        ))}
+            ▶
+          </ClayButton>
+        </div>
+      )}
+
+      <div className="mt-3 flex flex-wrap gap-2">
+        {pageItems.map((p, i) => {
+          const realIndex = page * PAGE + i;
+          return (
+            <button
+              key={p.id}
+              onClick={() => reset(realIndex)}
+              className={cn(
+                "clay-sm h-10 min-w-10 rounded-xl bg-card px-2 font-display text-sm font-extrabold transition-transform active:scale-90",
+                realIndex === index && "bg-primary text-primary-foreground",
+              )}
+            >
+              {p.glyph ?? p.label.slice(0, 2)}
+            </button>
+          );
+        })}
       </div>
+
     </AppShell>
   );
 }
