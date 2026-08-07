@@ -1,6 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ClayButton, ClayCard } from "@/components/clay";
+import { SceneBackdrop } from "@/components/scene-backdrop";
+
 import { useProfile } from "@/hooks/use-profile";
 import { TOTAL_LEVELS, buildScene, getLevel } from "@/lib/game-data";
 import { cn } from "@/lib/utils";
