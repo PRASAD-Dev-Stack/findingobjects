@@ -123,7 +123,8 @@ function PlayLevel({ id }: { id: number }) {
             shake && "animate-shake",
           )}
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,var(--color-secondary),transparent_60%),radial-gradient(circle_at_75%_80%,var(--color-accent),transparent_55%)] opacity-70" />
+          <SceneBackdrop theme={level.themeKey} />
+
 
           {scene.clutter.map((o) => (
             <SceneGlyph key={o.id} o={o} onTap={(x, y) => hit(o.id, x, y, false)} />
