@@ -6,7 +6,9 @@ import { DrawBoard } from "@/components/draw-board";
 import {
   LETTERS,
   NUMBERS,
+  ROMAN,
   SHAPES,
+  SMALL_LETTERS,
   drawPrompt,
   scoreDrawing,
   scoreMessage,
@@ -17,16 +19,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/draw")({
   head: () => ({
     meta: [
-      { title: "Trace & Learn — Letters, Numbers, Shapes" },
+      { title: "Trace & Learn — Letters, Numbers, Roman & Shapes" },
       {
         name: "description",
         content:
-          "A kids whiteboard that shows a letter, number or shape and scores how accurately you draw it, from 10% to 100%.",
+          "A kids whiteboard for tracing capital and small letters, numbers up to 999, Roman numerals and shapes — scored from 10% to 100%.",
       },
       { property: "og:title", content: "Trace & Learn — ObjectFinder Pro" },
       {
         property: "og:description",
-        content: "Draw letters, numbers and pictures and get an instant accuracy score.",
+        content: "Trace A-Z, a-z, 0-999, Roman numerals and pictures with instant accuracy scoring.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -36,16 +38,20 @@ export const Route = createFileRoute("/draw")({
 });
 
 const TABS = [
-  { key: "letters", label: "Letters", list: LETTERS, emoji: "🔤" },
-  { key: "numbers", label: "Numbers", list: NUMBERS, emoji: "🔢" },
-  { key: "shapes", label: "Drawings", list: SHAPES, emoji: "🎨" },
+  { key: "letters", label: "A-Z", list: LETTERS, emoji: "🔤" },
+  { key: "small", label: "a-z", list: SMALL_LETTERS, emoji: "🔡" },
+  { key: "numbers", label: "0-999", list: NUMBERS, emoji: "🔢" },
+  { key: "roman", label: "Roman", list: ROMAN, emoji: "🏛️" },
+  { key: "shapes", label: "Draw", list: SHAPES, emoji: "🎨" },
 ] as const;
 
 const INK = ["#2b2b45", "#ef476f", "#118ab2", "#06d6a0", "#ffb703", "#8338ec"];
+const PAGE = 50;
 
 function DrawPage() {
   const [tab, setTab] = useState<(typeof TABS)[number]["key"]>("letters");
   const [index, setIndex] = useState(0);
+  const [page, setPage] = useState(0);
   const [strokes, setStrokes] = useState<Stroke[]>([]);
   const [score, setScore] = useState<number | null>(null);
   const [ghost, setGhost] = useState(true);
@@ -53,6 +59,9 @@ function DrawPage() {
 
   const list = TABS.find((t) => t.key === tab)!.list;
   const prompt = list[index % list.length]!;
+  const pages = Math.ceil(list.length / PAGE);
+  const pageItems = list.slice(page * PAGE, page * PAGE + PAGE);
+
 
   const guide = useMemo(
     () =>
