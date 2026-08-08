@@ -8,12 +8,12 @@ import { CHAPTER_THEMES, TOTAL_LEVELS, getLevel } from "@/lib/game-data";
 export const Route = createFileRoute("/levels")({
   head: () => ({
     meta: [
-      { title: "Level Map — ObjectFinder Pro" },
+      { title: "Level Map — Finding an Objects" },
       {
         name: "description",
         content: "Browse 999 hidden object levels across themed chapters and track your stars.",
       },
-      { property: "og:title", content: "Level Map — ObjectFinder Pro" },
+      { property: "og:title", content: "Level Map — Finding an Objects" },
       {
         property: "og:description",
         content: "999 levels across themed chapters, from Cozy House to the Master Vault.",

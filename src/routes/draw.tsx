@@ -25,7 +25,7 @@ export const Route = createFileRoute("/draw")({
         content:
           "A kids whiteboard for tracing capital and small letters, numbers up to 999, Roman numerals and shapes — scored from 10% to 100%.",
       },
-      { property: "og:title", content: "Trace & Learn — ObjectFinder Pro" },
+      { property: "og:title", content: "Trace & Learn — Finding an Objects" },
       {
         property: "og:description",
         content: "Trace A-Z, a-z, 0-999, Roman numerals and pictures with instant accuracy scoring.",

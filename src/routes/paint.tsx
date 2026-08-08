@@ -14,7 +14,7 @@ export const Route = createFileRoute("/paint")({
         content:
           "Tap each part of a picture — roof, door, window, wall — and fill it with colour. 49 cartoon drawings with a party animation when you finish.",
       },
-      { property: "og:title", content: "Paint Studio — ObjectFinder Pro" },
+      { property: "og:title", content: "Paint Studio — Finding an Objects" },
       {
         property: "og:description",
         content: "Colour 49 cartoon pictures part by part and celebrate every finished artwork.",

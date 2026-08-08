@@ -8,13 +8,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/multiplayer")({
   head: () => ({
     meta: [
-      { title: "Versus Mode — ObjectFinder Pro" },
+      { title: "Versus Mode — Finding an Objects" },
       {
         name: "description",
         content:
           "Invite up to 3 friends by Player ID and take turns under the 20-second spotlight countdown.",
       },
-      { property: "og:title", content: "Versus Mode — ObjectFinder Pro" },
+      { property: "og:title", content: "Versus Mode — Finding an Objects" },
       {
         property: "og:description",
         content: "1v1, 1v1v1 or 4-player hidden object duels with turn-based spotlight rounds.",

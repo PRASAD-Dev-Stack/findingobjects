@@ -15,7 +15,7 @@ export const Route = createFileRoute("/doodle")({
         content:
           "A colourful free-draw whiteboard with crayons, sticker stamps and a saved art gallery for little artists.",
       },
-      { property: "og:title", content: "Doodle Studio — ObjectFinder Pro" },
+      { property: "og:title", content: "Doodle Studio — Finding an Objects" },
       {
         property: "og:description",
         content: "Paint, stamp stickers and save your artwork to your own gallery.",

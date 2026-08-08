@@ -7,13 +7,13 @@ import { TOTAL_LEVELS, getLevel } from "@/lib/game-data";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ObjectFinder Pro — Hidden Object Puzzle Game" },
+      { title: "Finding an Objects — Hidden Object Puzzle Game" },
       {
         name: "description",
         content:
           "Play 999 hidden object levels with claymorphic cartoon scenes, daily challenges and 4-player spotlight multiplayer.",
       },
-      { property: "og:title", content: "ObjectFinder Pro — Hidden Object Puzzle Game" },
+      { property: "og:title", content: "Finding an Objects — Hidden Object Puzzle Game" },
       {
         property: "og:description",
         content: "999 cartoon hidden-object levels plus real-time 4-player versus matches.",
