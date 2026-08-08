@@ -8,7 +8,8 @@ export type PlayerProfile = {
   coins: number;
   gems: number;
   stars: number;
-  unlocked: number;
+  /** Explicitly unlocked level ids (chapter openers are always playable). */
+  unlocked_levels: number[];
   stars_by_level: Record<string, number>;
 };
 
@@ -24,7 +25,7 @@ function createProfile(): PlayerProfile {
     coins: 250,
     gems: 5,
     stars: 0,
-    unlocked: 1,
+    unlocked_levels: [1],
     stars_by_level: {},
   };
 }
@@ -68,7 +69,9 @@ export function useProfile() {
           stars_by_level: byLevel,
           stars: Object.values(byLevel).reduce((a, b) => a + b, 0),
           coins: prev.coins + coins,
-          unlocked: Math.max(prev.unlocked, levelId + 1),
+          unlocked_levels: prev.unlocked_levels.includes(levelId + 1)
+            ? prev.unlocked_levels
+            : [...prev.unlocked_levels, levelId + 1],
         };
         window.localStorage.setItem(KEY, JSON.stringify(next));
         return next;
