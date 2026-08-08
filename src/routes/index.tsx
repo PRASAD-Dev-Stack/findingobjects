@@ -25,7 +25,7 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const { profile } = useProfile();
-  const nextLevel = profile?.unlocked ?? 1;
+  const nextLevel = Math.max(1, ...(profile?.unlocked_levels ?? [1]));
   const level = getLevel(Math.min(nextLevel, TOTAL_LEVELS));
 
   return (

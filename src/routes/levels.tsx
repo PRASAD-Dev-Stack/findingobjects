@@ -28,7 +28,7 @@ const CHAPTER_COUNT = Math.ceil(TOTAL_LEVELS / 10);
 function Levels() {
   const { profile } = useProfile();
   const [chapter, setChapter] = useState(1);
-  const unlocked = profile?.unlocked ?? 1;
+  const unlocked = profile?.unlocked_levels ?? [1];
   const theme = CHAPTER_THEMES[(chapter - 1) % CHAPTER_THEMES.length]!;
 
   const levels = Array.from({ length: 10 }, (_, i) => (chapter - 1) * 10 + i + 1).filter(
