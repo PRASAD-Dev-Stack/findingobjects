@@ -44,8 +44,8 @@ function Home() {
 
         <div className="mb-7 text-center">
           <div className="animate-float mb-2 text-7xl">🔍</div>
-          <h1 className="font-display text-4xl font-extrabold leading-none">ObjectFinder</h1>
-          <p className="font-display text-2xl font-bold text-primary">PRO</p>
+          <h1 className="font-display text-4xl font-extrabold leading-none">Finding an</h1>
+          <p className="font-display text-2xl font-bold text-primary">OBJECTS</p>
           <p className="mt-2 text-sm font-semibold text-muted-foreground">
             {TOTAL_LEVELS} levels of cartoon chaos
           </p>

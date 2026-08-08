@@ -194,8 +194,9 @@ export function buildScene(level: Level): { targets: SceneObject[]; clutter: Sce
   };
 
   // Unique glyph pool: every object on screen is one-of-a-kind, so a checklist
-  // entry can never match two different sprites at the same time.
-  const pool = [...new Set(theme.props)];
+  // entry can never match two different sprites at the same time. Backdrop
+  // mascots are reserved so a scene character can't double a findable object.
+  const pool = [...new Set(theme.props)].filter((g) => !BACKDROP_GLYPHS.has(g));
   // Fisher-Yates with the seeded PRNG.
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(rand() * (i + 1));
