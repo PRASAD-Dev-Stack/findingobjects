@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AppShell, TopBar } from "@/components/app-shell";
 import { ClayButton, ClayCard } from "@/components/clay";
 import { useProfile } from "@/hooks/use-profile";
-import { CHAPTER_THEMES, TOTAL_LEVELS, getLevel } from "@/lib/game-data";
+import { CHAPTER_THEMES, TOTAL_LEVELS, getLevel, isLevelUnlocked } from "@/lib/game-data";
 
 export const Route = createFileRoute("/levels")({
   head: () => ({
@@ -70,7 +70,7 @@ function Levels() {
       <div className="space-y-3">
         {levels.map((id, i) => {
           const level = getLevel(id);
-          const locked = id > unlocked;
+          const locked = !isLevelUnlocked(id, unlocked);
           const stars = profile?.stars_by_level[String(id)] ?? 0;
           return (
             <div
