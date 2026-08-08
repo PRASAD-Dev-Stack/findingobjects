@@ -123,6 +123,25 @@ export const CHAPTER_THEMES: {
 
 export const TOTAL_LEVELS = 999;
 
+/** Mascot glyphs drawn by SceneBackdrop — never reuse them as findable objects. */
+export const BACKDROP_GLYPHS = new Set([
+  "🐱",
+  "🐕",
+  "🦊",
+  "🐬",
+  "👻",
+  "🧑‍🚀",
+  "🐍",
+  "🤖",
+  "🤡",
+  "🦝",
+]);
+
+/** First level of every chapter is free to try; the rest unlock by progress. */
+export function isLevelUnlocked(id: number, unlocked: number) {
+  return id % 10 === 1 || id <= unlocked;
+}
+
 function mulberry32(seed: number) {
   let a = seed >>> 0;
   return () => {
