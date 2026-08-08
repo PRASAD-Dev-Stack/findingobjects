@@ -10,12 +10,12 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/play/$levelId")({
   head: ({ params }) => ({
     meta: [
-      { title: `Level ${params.levelId} — ObjectFinder Pro` },
+      { title: `Level ${params.levelId} — Finding an Objects` },
       {
         name: "description",
         content: `Find every hidden object in level ${params.levelId} before the timer runs out.`,
       },
-      { property: "og:title", content: `Level ${params.levelId} — ObjectFinder Pro` },
+      { property: "og:title", content: `Level ${params.levelId} — Finding an Objects` },
       {
         property: "og:description",
         content: "Tap the hidden cartoon objects before the clock runs out.",

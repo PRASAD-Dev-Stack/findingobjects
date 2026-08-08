@@ -8,12 +8,12 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/profile")({
   head: () => ({
     meta: [
-      { title: "Your Profile — ObjectFinder Pro" },
+      { title: "Your Profile — Finding an Objects" },
       {
         name: "description",
-        content: "Your Player ID, avatar, coins and star collection in ObjectFinder Pro.",
+        content: "Your Player ID, avatar, coins and star collection in Finding an Objects.",
       },
-      { property: "og:title", content: "Your Profile — ObjectFinder Pro" },
+      { property: "og:title", content: "Your Profile — Finding an Objects" },
       {
         property: "og:description",
         content: "Share your Player ID and invite friends to a versus match.",
@@ -89,7 +89,7 @@ function Profile() {
             block
             onClick={() => {
               if (!profile) return;
-              const text = `Play ObjectFinder Pro with me! My Player ID: ${profile.playerId}`;
+              const text = `Play Finding an Objects with me! My Player ID: ${profile.playerId}`;
               if (navigator.share) void navigator.share({ text });
               else void navigator.clipboard.writeText(text);
             }}

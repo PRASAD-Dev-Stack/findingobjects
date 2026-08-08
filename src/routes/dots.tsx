@@ -13,7 +13,7 @@ export const Route = createFileRoute("/dots")({
         content:
           "Tap the numbered dots in order to reveal a hidden picture — a playful way for kids to practise counting and drawing.",
       },
-      { property: "og:title", content: "Connect the Dots — ObjectFinder Pro" },
+      { property: "og:title", content: "Connect the Dots — Finding an Objects" },
       {
         property: "og:description",
         content: "Count from 1 upward and watch a picture appear line by line.",

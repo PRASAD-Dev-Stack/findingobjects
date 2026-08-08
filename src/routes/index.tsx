@@ -7,13 +7,13 @@ import { TOTAL_LEVELS, getLevel } from "@/lib/game-data";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ObjectFinder Pro — Hidden Object Puzzle Game" },
+      { title: "Finding an Objects — Hidden Object Puzzle Game" },
       {
         name: "description",
         content:
           "Play 999 hidden object levels with claymorphic cartoon scenes, daily challenges and 4-player spotlight multiplayer.",
       },
-      { property: "og:title", content: "ObjectFinder Pro — Hidden Object Puzzle Game" },
+      { property: "og:title", content: "Finding an Objects — Hidden Object Puzzle Game" },
       {
         property: "og:description",
         content: "999 cartoon hidden-object levels plus real-time 4-player versus matches.",
@@ -44,8 +44,8 @@ function Home() {
 
         <div className="mb-7 text-center">
           <div className="animate-float mb-2 text-7xl">🔍</div>
-          <h1 className="font-display text-4xl font-extrabold leading-none">ObjectFinder</h1>
-          <p className="font-display text-2xl font-bold text-primary">PRO</p>
+          <h1 className="font-display text-4xl font-extrabold leading-none">Finding an</h1>
+          <p className="font-display text-2xl font-bold text-primary">OBJECTS</p>
           <p className="mt-2 text-sm font-semibold text-muted-foreground">
             {TOTAL_LEVELS} levels of cartoon chaos
           </p>

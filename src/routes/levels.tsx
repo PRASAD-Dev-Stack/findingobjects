@@ -3,17 +3,17 @@ import { useState } from "react";
 import { AppShell, TopBar } from "@/components/app-shell";
 import { ClayButton, ClayCard } from "@/components/clay";
 import { useProfile } from "@/hooks/use-profile";
-import { CHAPTER_THEMES, TOTAL_LEVELS, getLevel } from "@/lib/game-data";
+import { CHAPTER_THEMES, TOTAL_LEVELS, getLevel, isLevelUnlocked } from "@/lib/game-data";
 
 export const Route = createFileRoute("/levels")({
   head: () => ({
     meta: [
-      { title: "Level Map — ObjectFinder Pro" },
+      { title: "Level Map — Finding an Objects" },
       {
         name: "description",
         content: "Browse 999 hidden object levels across themed chapters and track your stars.",
       },
-      { property: "og:title", content: "Level Map — ObjectFinder Pro" },
+      { property: "og:title", content: "Level Map — Finding an Objects" },
       {
         property: "og:description",
         content: "999 levels across themed chapters, from Cozy House to the Master Vault.",
@@ -70,7 +70,7 @@ function Levels() {
       <div className="space-y-3">
         {levels.map((id, i) => {
           const level = getLevel(id);
-          const locked = id > unlocked;
+          const locked = !isLevelUnlocked(id, unlocked);
           const stars = profile?.stars_by_level[String(id)] ?? 0;
           return (
             <div

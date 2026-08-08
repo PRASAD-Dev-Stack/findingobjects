@@ -123,6 +123,25 @@ export const CHAPTER_THEMES: {
 
 export const TOTAL_LEVELS = 999;
 
+/** Mascot glyphs drawn by SceneBackdrop — never reuse them as findable objects. */
+export const BACKDROP_GLYPHS = new Set([
+  "🐱",
+  "🐕",
+  "🦊",
+  "🐬",
+  "👻",
+  "🧑‍🚀",
+  "🐍",
+  "🤖",
+  "🤡",
+  "🦝",
+]);
+
+/** First level of every chapter is free to try; the rest unlock by progress. */
+export function isLevelUnlocked(id: number, unlocked: number) {
+  return id % 10 === 1 || id <= unlocked;
+}
+
 function mulberry32(seed: number) {
   let a = seed >>> 0;
   return () => {
@@ -194,8 +213,9 @@ export function buildScene(level: Level): { targets: SceneObject[]; clutter: Sce
   };
 
   // Unique glyph pool: every object on screen is one-of-a-kind, so a checklist
-  // entry can never match two different sprites at the same time.
-  const pool = [...new Set(theme.props)];
+  // entry can never match two different sprites at the same time. Backdrop
+  // mascots are reserved so a scene character can't double a findable object.
+  const pool = [...new Set(theme.props)].filter((g) => !BACKDROP_GLYPHS.has(g));
   // Fisher-Yates with the seeded PRNG.
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(rand() * (i + 1));
