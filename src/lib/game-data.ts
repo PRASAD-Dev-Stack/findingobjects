@@ -137,9 +137,13 @@ export const BACKDROP_GLYPHS = new Set([
   "🦝",
 ]);
 
-/** First level of every chapter is free to try; the rest unlock by progress. */
-export function isLevelUnlocked(id: number, unlocked: number) {
-  return id % 10 === 1 || id <= unlocked;
+/**
+ * First level of every chapter is free to try. Any other level unlocks only
+ * when the level right before it has been completed — playing level 41 does
+ * not retroactively unlock 2..40.
+ */
+export function isLevelUnlocked(id: number, unlockedLevels: number[]) {
+  return id % 10 === 1 || unlockedLevels.includes(id);
 }
 
 function mulberry32(seed: number) {
