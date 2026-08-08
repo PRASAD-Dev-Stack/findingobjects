@@ -8,7 +8,8 @@ export type PlayerProfile = {
   coins: number;
   gems: number;
   stars: number;
-  unlocked: number;
+  /** Explicitly unlocked level ids (chapter openers are always playable). */
+  unlocked_levels: number[];
   stars_by_level: Record<string, number>;
 };
 
