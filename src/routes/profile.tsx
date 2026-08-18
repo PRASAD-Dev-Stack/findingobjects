@@ -113,6 +113,79 @@ function Profile() {
         ))}
       </div>
 
+      <ClayCard className="mb-4 p-4">
+        <p className="font-display text-lg font-extrabold">🧑‍🍼 Grown-up settings</p>
+        <p className="mb-3 text-xs font-semibold text-muted-foreground">
+          Learning extras stay on this device. Nothing about your child is ever sent anywhere.
+        </p>
+
+        <Row label="Age band" hint="Vocabulary Mode is suggested for 8+">
+          <div className="flex gap-2">
+            {(["3-5", "6-7", "8+"] as AgeBand[]).map((b) => (
+              <button
+                key={b}
+                onClick={() => updateLearn({ ageBand: b })}
+                className={cn(
+                  "clay-sm rounded-xl bg-card px-3 py-1.5 text-xs font-extrabold",
+                  learn.ageBand === b && "clay-inset bg-primary",
+                )}
+              >
+                {b}
+              </button>
+            ))}
+          </div>
+        </Row>
+
+        <Row label="Fun Facts" hint="A short fact pops up after some finds">
+          <Toggle on={learn.funFacts} onClick={() => updateLearn({ funFacts: !learn.funFacts })} />
+        </Row>
+
+        <Row label="Fact frequency">
+          <div className="flex gap-2">
+            {(["low", "medium", "high"] as FactFrequency[]).map((f) => (
+              <button
+                key={f}
+                onClick={() => updateLearn({ factFrequency: f })}
+                className={cn(
+                  "clay-sm rounded-xl bg-card px-3 py-1.5 text-xs font-extrabold capitalize",
+                  learn.factFrequency === f && "clay-inset bg-secondary",
+                )}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+        </Row>
+
+        <Row label="Vocabulary Mode" hint="Spelling mini-step, age 8+ only">
+          <Toggle
+            on={learn.vocabulary}
+            disabled={learn.ageBand !== "8+"}
+            onClick={() => updateLearn({ vocabulary: !learn.vocabulary })}
+          />
+        </Row>
+
+        <Row label="Read aloud" hint="Narrates facts and words">
+          <Toggle
+            on={learn.narration}
+            onClick={() => updateLearn({ narration: !learn.narration })}
+          />
+        </Row>
+      </ClayCard>
+
+      {learnedList.length > 0 && (
+        <ClayCard tone="muted" className="mb-4 p-4">
+          <p className="mb-2 font-display text-lg font-extrabold">📚 What we learned today</p>
+          <ul className="space-y-1">
+            {learnedList.map((l) => (
+              <li key={l.id} className="text-xs font-semibold text-muted-foreground">
+                {l.glyph} <span className="text-foreground">{l.name}:</span> {l.text}
+              </li>
+            ))}
+          </ul>
+        </ClayCard>
+      )}
+
       <p className="mb-2 font-display text-lg font-extrabold">Badges</p>
       <div className="grid grid-cols-4 gap-3">
         {BADGES.map((b) => (
@@ -125,3 +198,55 @@ function Profile() {
     </AppShell>
   );
 }
+
+function Row({
+  label,
+  hint,
+  children,
+}: {
+  label: string;
+  hint?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-3 border-t border-foreground/5 py-3 first:border-0">
+      <div className="min-w-0">
+        <p className="font-display text-sm font-extrabold">{label}</p>
+        {hint && <p className="text-[11px] font-semibold text-muted-foreground">{hint}</p>}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function Toggle({
+  on,
+  onClick,
+  disabled,
+}: {
+  on: boolean;
+  onClick: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <button
+      role="switch"
+      aria-checked={on}
+      disabled={disabled}
+      onClick={onClick}
+      className={cn(
+        "clay-inset h-8 w-14 shrink-0 rounded-full p-1 transition-colors",
+        on ? "bg-success" : "bg-muted",
+        disabled && "opacity-40",
+      )}
+    >
+      <span
+        className={cn(
+          "clay-sm block h-6 w-6 rounded-full bg-card transition-transform",
+          on && "translate-x-6",
+        )}
+      />
+    </button>
+  );
+}
+
