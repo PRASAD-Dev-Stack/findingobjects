@@ -96,7 +96,7 @@ export function WordChallengeCard({
 
   return (
     <div className="pointer-events-auto absolute inset-x-2 bottom-2 z-30">
-      <div className="clay animate-slide-up rounded-3xl bg-card p-4">
+      <div className="clay animate-rise rounded-3xl bg-card p-4">
         <div className="mb-3 flex items-center gap-3">
           <span className="clay-inset flex h-12 w-12 items-center justify-center rounded-2xl bg-muted text-2xl">
             {glyph}

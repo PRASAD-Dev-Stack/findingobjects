@@ -30,7 +30,7 @@ export function FunFactCard({
       <button
         type="button"
         onClick={onDismiss}
-        className="clay animate-slide-up flex w-full items-center gap-3 rounded-3xl bg-card p-3 text-left"
+        className="clay animate-rise flex w-full items-center gap-3 rounded-3xl bg-card p-3 text-left"
       >
         <span className="clay-inset flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-muted text-3xl">
           {fact.glyph}
