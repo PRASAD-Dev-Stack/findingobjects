@@ -201,6 +201,31 @@ function PlayLevel({ id }: { id: number }) {
             />
           )}
 
+          {fact && !challenge && !done && !failed && (
+            <FunFactCard
+              fact={fact}
+              firstOfSession={firstFact}
+              ttsEnabled={learn.narration}
+              onDismiss={() => setFact(null)}
+            />
+          )}
+
+          {challenge && !done && !failed && (
+            <WordChallengeCard
+              glyph={challenge.glyph}
+              name={challenge.name}
+              word={challenge.word}
+              difficulty={wordDifficulty}
+              ttsEnabled={learn.narration}
+              onSkip={() => setChallenge(null)}
+              onComplete={(firstTry) => {
+                recordWordAttempt(challenge.glyph, firstTry);
+                if (firstTry) addCoins(15);
+                setChallenge(null);
+              }}
+            />
+          )}
+
           {(done || failed) && (
             <div className="absolute inset-0 z-20 flex items-center justify-center bg-foreground/40 p-6 backdrop-blur-sm">
               <ClayCard className="animate-pop w-full p-6 text-center">
@@ -220,6 +245,21 @@ function PlayLevel({ id }: { id: number }) {
                 <p className="mb-4 text-sm font-semibold text-muted-foreground">
                   {found.length}/{scene.targets.length} found · {misses} misses · {hintsUsed} hints
                 </p>
+                {done && learned.length > 0 && (
+                  <div className="clay-inset mb-4 rounded-2xl bg-muted p-3 text-left">
+                    <p className="mb-1 font-display text-sm font-extrabold">
+                      📚 What we learned today
+                    </p>
+                    <ul className="space-y-1">
+                      {learned.map((l) => (
+                        <li key={l.id} className="text-xs font-semibold text-muted-foreground">
+                          {l.glyph} {l.text}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
                 <div className="flex gap-3">
                   <ClayButton
                     tone="muted"
