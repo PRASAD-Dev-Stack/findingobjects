@@ -38,7 +38,9 @@ function Play() {
 
 function PlayLevel({ id }: { id: number }) {
   const navigate = useNavigate();
-  const { completeLevel } = useProfile();
+  const { profile, completeLevel, recordWordAttempt, addCoins } = useProfile();
+  const learn = profile?.learn ?? DEFAULT_LEARN;
+  const { pickFact, wordFor } = useLearning();
 
   const level = useMemo(() => getLevel(id), [id]);
   const scene = useMemo(() => buildScene(level), [level]);
@@ -53,32 +55,70 @@ function PlayLevel({ id }: { id: number }) {
   const [burst, setBurst] = useState<{ x: number; y: number; k: number } | null>(null);
   const burstKey = useRef(0);
 
+  const [fact, setFact] = useState<ObjectFact | null>(null);
+  const [challenge, setChallenge] = useState<{ glyph: string; name: string; word: string } | null>(
+    null,
+  );
+  const [firstFact, setFirstFact] = useState(false);
+  const factsShown = useRef(0);
+  const foundSinceWord = useRef(0);
+  const [learned, setLearned] = useState<LearnedEntry[]>([]);
+
   const done = found.length === scene.targets.length;
   const failed = timeLeft <= 0 && !done;
 
   useEffect(() => {
-    if (done || timeLeft <= 0) return;
+    if (done || timeLeft <= 0 || challenge) return;
     const t = window.setInterval(() => setTimeLeft((s) => s - 1), 1000);
     return () => window.clearInterval(t);
-  }, [done, timeLeft]);
+  }, [done, timeLeft, challenge]);
 
   useEffect(() => {
     if (!done) return;
     const stars = misses + hintsUsed === 0 ? 3 : misses + hintsUsed <= 3 ? 2 : 1;
     completeLevel(id, stars, 20 + stars * 15);
+    setLearned(learnedToday().slice(-3));
   }, [done, id, misses, hintsUsed, completeLevel]);
 
   const stars = misses + hintsUsed === 0 ? 3 : misses + hintsUsed <= 3 ? 2 : 1;
   const next = scene.targets.find((t) => !found.includes(t.id));
 
+  const wordDifficulty: WordDifficulty = id > 400 ? "hard" : id > 120 ? "medium" : "easy";
+
+  /** Enrichment after a successful find: fun fact, then optional spelling step. */
+  function enrich(glyph: string) {
+    const vocabOn = learn.vocabulary && learn.ageBand === "8+";
+    foundSinceWord.current += 1;
+
+    if (vocabOn && foundSinceWord.current >= 3) {
+      const entry = wordFor(glyph);
+      if (entry && entry.word.length >= 3) {
+        foundSinceWord.current = 0;
+        setChallenge({ glyph, ...entry });
+        return;
+      }
+    }
+
+    if (!learn.funFacts || factsShown.current >= 2) return;
+    if (Math.random() > FACT_CHANCE[learn.factFrequency]) return;
+    const picked = pickFact(glyph, seenFactIds());
+    if (!picked) return;
+    factsShown.current += 1;
+    setFirstFact(factsShown.current === 1 && seenFactIds().length === 0);
+    rememberFact({ id: picked.id, glyph: picked.glyph, name: picked.name, text: picked.text });
+    setFact(picked);
+  }
+
   function hit(objId: string, x: number, y: number, isTarget: boolean) {
-    if (done || failed) return;
+    if (done || failed || challenge) return;
     if (isTarget && !found.includes(objId)) {
       burstKey.current += 1;
       setBurst({ x, y, k: burstKey.current });
       setFound((f) => [...f, objId]);
       setHintFor(null);
       vibrate(12);
+      const glyph = scene.targets.find((t) => t.id === objId)?.glyph;
+      if (glyph) enrich(glyph);
     } else {
       setMisses((m) => m + 1);
       setTimeLeft((s) => Math.max(0, s - 2));
@@ -87,6 +127,7 @@ function PlayLevel({ id }: { id: number }) {
       window.setTimeout(() => setShake(false), 350);
     }
   }
+
 
   return (
     <div className="scene-sky min-h-screen">
