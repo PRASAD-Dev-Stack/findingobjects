@@ -1,11 +1,22 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ClayButton, ClayCard } from "@/components/clay";
+import { FunFactCard } from "@/components/fun-fact-card";
 import { SceneBackdrop } from "@/components/scene-backdrop";
+import { WordChallengeCard, type WordDifficulty } from "@/components/word-challenge-card";
 
-import { useProfile } from "@/hooks/use-profile";
+import { useLearning } from "@/hooks/use-learning";
+import { DEFAULT_LEARN, FACT_CHANCE, useProfile } from "@/hooks/use-profile";
 import { TOTAL_LEVELS, buildScene, getLevel } from "@/lib/game-data";
+import type { ObjectFact } from "@/lib/learning.functions";
+import {
+  learnedToday,
+  rememberFact,
+  seenFactIds,
+  type LearnedEntry,
+} from "@/lib/session-learn";
 import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/play/$levelId")({
   head: ({ params }) => ({
