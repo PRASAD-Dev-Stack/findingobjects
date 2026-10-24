@@ -232,7 +232,8 @@ function PlayLevel({ id }: { id: number }) {
             />
           </div>
         )}
-            <div className="absolute inset-0 z-20 flex items-center justify-center bg-foreground/40 p-6 backdrop-blur-sm">
+        {(done || failed) && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-6 backdrop-blur-sm">
               <ClayCard className="animate-pop w-full p-6 text-center">
                 <div className="mb-1 text-5xl">{done ? "🏆" : "⌛"}</div>
                 <h2 className="font-display text-2xl font-extrabold">
@@ -288,9 +289,9 @@ function PlayLevel({ id }: { id: number }) {
                   </ClayButton>
                 </div>
               </ClayCard>
-            </div>
           )}
         </div>
+
 
         <div className="mt-3 flex items-center gap-3">
           <ClayCard inset className="flex-1 overflow-x-auto p-3">
