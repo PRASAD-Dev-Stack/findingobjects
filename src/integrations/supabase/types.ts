@@ -41,12 +41,134 @@ export type Database = {
         }
         Relationships: []
       }
+      versus_members: {
+        Row: {
+          player_id: string
+          room_id: string
+          seat: number
+          status: string
+        }
+        Insert: {
+          player_id: string
+          room_id: string
+          seat: number
+          status?: string
+        }
+        Update: {
+          player_id?: string
+          room_id?: string
+          seat?: number
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "versus_members_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "versus_rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      versus_profiles: {
+        Row: {
+          avatar: string
+          last_seen: string
+          name: string
+          player_id: string
+        }
+        Insert: {
+          avatar?: string
+          last_seen?: string
+          name?: string
+          player_id: string
+        }
+        Update: {
+          avatar?: string
+          last_seen?: string
+          name?: string
+          player_id?: string
+        }
+        Relationships: []
+      }
+      versus_rooms: {
+        Row: {
+          created_at: string
+          found: Json
+          host_id: string
+          id: string
+          level_id: number
+          size: number
+          status: string
+          total: number
+          turn_index: number
+          turn_seq: number
+          turn_started_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          found?: Json
+          host_id: string
+          id?: string
+          level_id: number
+          size: number
+          status?: string
+          total: number
+          turn_index?: number
+          turn_seq?: number
+          turn_started_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          found?: Json
+          host_id?: string
+          id?: string
+          level_id?: number
+          size?: number
+          status?: string
+          total?: number
+          turn_index?: number
+          turn_seq?: number
+          turn_started_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      versus_advance: {
+        Args: { p_player: string; p_room: string; p_seq: number }
+        Returns: boolean
+      }
+      versus_create_room: {
+        Args: {
+          p_host: string
+          p_invitees: string[]
+          p_level: number
+          p_total: number
+        }
+        Returns: string
+      }
+      versus_invites: { Args: { p_player: string }; Returns: Json }
+      versus_leave: {
+        Args: { p_player: string; p_room: string }
+        Returns: undefined
+      }
+      versus_register: {
+        Args: { p_avatar: string; p_id: string; p_name: string }
+        Returns: undefined
+      }
+      versus_respond: {
+        Args: { p_accept: boolean; p_player: string; p_room: string }
+        Returns: undefined
+      }
+      versus_state: { Args: { p_room: string }; Returns: Json }
+      versus_tap: {
+        Args: { p_obj: string; p_player: string; p_room: string }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
