@@ -289,8 +289,9 @@ function PlayLevel({ id }: { id: number }) {
                   </ClayButton>
                 </div>
               </ClayCard>
-          )}
-        </div>
+          </div>
+        )}
+
 
 
         <div className="mt-3 flex items-center gap-3">
