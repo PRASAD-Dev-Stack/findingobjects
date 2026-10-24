@@ -1,8 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppShell, TopBar } from "@/components/app-shell";
 import { ClayButton, ClayCard } from "@/components/clay";
-import { AVATARS, useProfile } from "@/hooks/use-profile";
+import {
+  AVATARS,
+  DEFAULT_LEARN,
+  useProfile,
+  type AgeBand,
+  type FactFrequency,
+} from "@/hooks/use-profile";
+import { learnedToday } from "@/lib/session-learn";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/profile")({
@@ -31,8 +38,16 @@ const BADGES = [
 ];
 
 function Profile() {
-  const { profile, update } = useProfile();
+  const { profile, update, updateLearn } = useProfile();
   const [copied, setCopied] = useState(false);
+  const learn = profile?.learn ?? DEFAULT_LEARN;
+  const [learnedList, setLearnedList] = useState(() =>
+    typeof window === "undefined" ? [] : learnedToday(),
+  );
+
+  useEffect(() => {
+    setLearnedList(learnedToday());
+  }, [profile?.playerId]);
 
   return (
     <AppShell>
