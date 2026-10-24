@@ -8,16 +8,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/paint")({
   head: () => ({
     meta: [
-      { title: "Paint Studio — 49 Colour-In Pictures" },
+      { title: "Paint Studio — 59 Colour-In Pictures" },
       {
         name: "description",
         content:
-          "Tap each part of a picture — roof, door, window, wall — and fill it with colour. 49 cartoon drawings with a party animation when you finish.",
+          "Tap each part of a picture — roof, door, window, wall — and fill it with colour. 59 cartoon drawings with a party animation when you finish.",
       },
       { property: "og:title", content: "Paint Studio — Finding an Objects" },
       {
         property: "og:description",
-        content: "Colour 49 cartoon pictures part by part and celebrate every finished artwork.",
+        content: "Colour 59 cartoon pictures part by part and celebrate every finished artwork.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

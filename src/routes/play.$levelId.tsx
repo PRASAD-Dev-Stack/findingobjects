@@ -201,16 +201,22 @@ function PlayLevel({ id }: { id: number }) {
             />
           )}
 
-          {fact && !challenge && !done && !failed && (
+        </div>
+
+        {/* Learning cards render below the scene so they never hide objects. */}
+        {fact && !challenge && !done && !failed && (
+          <div className="mt-2">
             <FunFactCard
               fact={fact}
               firstOfSession={firstFact}
               ttsEnabled={learn.narration}
               onDismiss={() => setFact(null)}
             />
-          )}
+          </div>
+        )}
 
-          {challenge && !done && !failed && (
+        {challenge && !done && !failed && (
+          <div className="mt-2">
             <WordChallengeCard
               glyph={challenge.glyph}
               name={challenge.name}
@@ -224,10 +230,10 @@ function PlayLevel({ id }: { id: number }) {
                 setChallenge(null);
               }}
             />
-          )}
-
-          {(done || failed) && (
-            <div className="absolute inset-0 z-20 flex items-center justify-center bg-foreground/40 p-6 backdrop-blur-sm">
+          </div>
+        )}
+        {(done || failed) && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-6 backdrop-blur-sm">
               <ClayCard className="animate-pop w-full p-6 text-center">
                 <div className="mb-1 text-5xl">{done ? "🏆" : "⌛"}</div>
                 <h2 className="font-display text-2xl font-extrabold">
@@ -283,9 +289,10 @@ function PlayLevel({ id }: { id: number }) {
                   </ClayButton>
                 </div>
               </ClayCard>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
+
+
 
         <div className="mt-3 flex items-center gap-3">
           <ClayCard inset className="flex-1 overflow-x-auto p-3">

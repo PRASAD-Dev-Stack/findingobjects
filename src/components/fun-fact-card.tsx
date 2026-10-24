@@ -26,7 +26,7 @@ export function FunFactCard({
   }, [fact.id, fact.text, autoDismissMs, ttsEnabled, onDismiss]);
 
   return (
-    <div className="pointer-events-auto absolute inset-x-2 bottom-2 z-30">
+    <div className="pointer-events-auto relative z-30">
       <button
         type="button"
         onClick={onDismiss}
